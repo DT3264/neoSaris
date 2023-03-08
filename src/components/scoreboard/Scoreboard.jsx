@@ -19,6 +19,8 @@ class Scoreboard extends Component {
         result.timeSubmitted = submission.timeSubmitted;
         result.verdict = submission.verdict;
         result.problemIndex = submission.problemIndex;
+        result.contest_score = submission.contest_score;
+        result.penalty = submission.penalty;
         submissionsOnContest.push(result);
       }
     });
@@ -39,6 +41,8 @@ class Scoreboard extends Component {
         result.timeSubmitted = submission.timeSubmitted;
         result.verdict = submission.verdict;
         result.problemIndex = submission.problemIndex;
+        result.contest_score = submission.contest_score;
+        result.penalty = submission.penalty;
         if (submissionsData.verdicts.wrongAnswerWithoutPenalty.includes(result.verdict) === false) {
           submissionsOnFrozen.push(result);
         }
@@ -82,15 +86,33 @@ class Scoreboard extends Component {
       if (this.props.submissionsData.verdicts.wrongAnswerWithoutPenalty.includes(submission.verdict)) {
         // continue;
       } else if (this.props.submissionsData.verdicts.accepted.includes(submission.verdict)) {
+        if(submission.verdict === "PA"){
+
+          if(submission.contestantName === "ccup2018-31(Crack)"){
+            console.log("En " + submission.problemIndex);
+            console.log(submission)
+          }
+        }
+        else if(submission.verdict === "AC"){
+          if(currTeam.isProblemSolved[problemIndex] === 0){
+            if (problemHasBeenSolved[problemIndex] === 0) {
+              problemHasBeenSolved[problemIndex] = 1;
+              currTeam.isFirstToSolve[problemIndex] = 1;
+            }
+            if(submission.contestantName === "ccup2018-31(Crack)"){
+              console.log("Llevaban " + currTeam.solved)
+            }
+            currTeam.solved++;
+            if(submission.contestantName === "ccup2018-31(Crack)"){
+              console.log("Llevan " + currTeam.solved)
+            }
+          }
+        }
         // Update accepted problem only if has not been accepted before.
         currTeam.isProblemSolved[problemIndex] = 1;
-        currTeam.penaltyOnProblem[problemIndex] = submission.timeSubmitted;
-        currTeam.penalty += submission.timeSubmitted + currTeam.triesOnProblems[problemIndex] * 20;
-        currTeam.solved++;
-        if (problemHasBeenSolved[problemIndex] === 0) {
-          problemHasBeenSolved[problemIndex] = 1;
-          currTeam.isFirstToSolve[problemIndex] = 1;
-        }
+        currTeam.penaltyOnProblem[problemIndex] += submission.penalty;
+        currTeam.penalty += submission.penalty;
+
       } else {
         // Update penalty problem only if has not been accepted before.
         currTeam.triesOnProblems[problemIndex]++;
