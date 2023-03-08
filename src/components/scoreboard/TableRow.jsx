@@ -240,19 +240,19 @@ class TableRow extends Component {
         } else {
           verdict = "Accepted";
         }
-        textToShowInProblem = `${this.numberOfTriesOnAcceptedProblem(problem.index)} ${this.getPenalty(problem.index)} (${this.getTries(problem.index)})`;
+        textToShowInProblem = [problem.index, `${this.getPenalty(problem.index)} (${this.getTries(problem.index)})`];
       } else if (this.isPartiallySolved(problem.index)) {
         verdict = "Resolving";
-        textToShowInProblem = `${problem.index} +${this.getBestScore(problem.index)} ${this.getPenalty(problem.index)} (${this.getTries(problem.index)})`;
+        textToShowInProblem = [problem.index, this.getBestScore(problem.index), `${this.getPenalty(problem.index)} (${this.getTries(problem.index)})`];
       } else if (this.isACurrentFrozenProblem(problem.index) === true) {
         verdict = "Resolving";
-        textToShowInProblem = this.numberOfTriesOnFrozenProblem(problem.index);
+        textToShowInProblem = [problem.index, this.numberOfTriesOnFrozenProblem(problem.index)];
       } else if (this.isAPendingProblem(problem.index) === true) {
         verdict = "Pending";
-        textToShowInProblem = this.numberOfTriesOnFrozenProblem(problem.index);
+        textToShowInProblem = [problem.index, this.numberOfTriesOnFrozenProblem(problem.index)];
       } else if (this.hasTriedProblem(problem.index) === true) {
         verdict = "WrongAnswer";
-        textToShowInProblem = this.numberOfTriesOnTriedProblem(problem.index);
+        textToShowInProblem = [problem.index, this.numberOfTriesOnTriedProblem(problem.index)];
       }
 
       return {
@@ -291,7 +291,13 @@ class TableRow extends Component {
         {/*ProblemsSolved*/}
         <span className="tableRow-ResolvedProblems">{this.props.team.totalScore.toFixed(2)}</span>
         {/*Penalty*/}
-        <span className="tableRow-Penalty">{`${this.props.team.penalty.toFixed(2)}(${this.obtenerEnviosTotales(this.props.team)})`}</span>
+        <span className="tableRow-Penalty">{
+          <>
+            {this.props.team.penalty.toFixed(2)}
+            <br/>
+            ({this.obtenerEnviosTotales(this.props.team)})
+          </>
+        }</span>
       </div>
     );
   }
