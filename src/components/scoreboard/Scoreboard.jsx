@@ -49,14 +49,15 @@ class Scoreboard extends Component {
 
   resetTeams(teams) {
     for (let i = 0; i < teams.length; i++) {
-      teams[i].position = 0;
-      teams[i].penalty = 0;
-      teams[i].solved = 0;
+      let currTeam = teams[i];
+      currTeam.position = 0;
+      currTeam.penalty = 0;
+      currTeam.solved = 0;
       for (let j = 0; j < this.state.numberOfProblems; j++) {
-        teams[i].isProblemSolved[j] = 0;
-        teams[i].isFirstToSolve[j] = 0;
-        teams[i].triesOnProblems[j] = 0;
-        teams[i].penaltyOnProblem[j] = 0;
+        currTeam.isProblemSolved[j] = 0;
+        currTeam.isFirstToSolve[j] = 0;
+        currTeam.triesOnProblems[j] = 0;
+        currTeam.penaltyOnProblem[j] = 0;
       }
     }
     return teams;
@@ -83,17 +84,18 @@ class Scoreboard extends Component {
       } else if (this.props.submissionsData.verdicts.accepted.includes(submission.verdict)) {
         // Update accepted problem only if has not been accepted before.
         for (let i = 0; i < teams.length; i++) {
-          if (teams[i].name === submission.contestantName) {
+          let currTeam = teams[i];
+          if (currTeam.name === submission.contestantName) {
             for (let j = 0; j < this.state.numberOfProblems; j++) {
               let problemLetter = this.props.submissionsData.problems[j].index;
-              if (problemLetter === submission.problemIndex && teams[i].isProblemSolved[j] === 0) {
-                teams[i].isProblemSolved[j] = 1;
-                teams[i].penaltyOnProblem[j] = submission.timeSubmitted;
-                teams[i].penalty += submission.timeSubmitted + teams[i].triesOnProblems[j] * 20;
-                teams[i].solved++;
+              if (problemLetter === submission.problemIndex && currTeam.isProblemSolved[j] === 0) {
+                currTeam.isProblemSolved[j] = 1;
+                currTeam.penaltyOnProblem[j] = submission.timeSubmitted;
+                currTeam.penalty += submission.timeSubmitted + currTeam.triesOnProblems[j] * 20;
+                currTeam.solved++;
                 if (problemHasBeenSolved[j] === 0) {
                   problemHasBeenSolved[j] = 1;
-                  teams[i].isFirstToSolve[j] = 1;
+                  currTeam.isFirstToSolve[j] = 1;
                 }
                 break;
               }
@@ -104,11 +106,12 @@ class Scoreboard extends Component {
       } else {
         // Update penalty problem only if has not been accepted before.
         for (let i = 0; i < teams.length; i++) {
-          if (teams[i].name === submission.contestantName) {
+          let currTeam = teams[i];
+          if (currTeam.name === submission.contestantName) {
             for (let j = 0; j < this.state.numberOfProblems; j++) {
               let problemLetter = this.props.submissionsData.problems[j].index;
-              if (problemLetter === submission.problemIndex && teams[i].isProblemSolved[j] === 0) {
-                teams[i].triesOnProblems[j]++;
+              if (problemLetter === submission.problemIndex && currTeam.isProblemSolved[j] === 0) {
+                currTeam.triesOnProblems[j]++;
                 break;
               }
             }
@@ -129,7 +132,7 @@ class Scoreboard extends Component {
     });
 
     let position = 1;
-    for (var i = 0; i < teamsSorted.length; i++) {
+    for (let i = 0; i < teamsSorted.length; i++) {
       if (
         i > 0 &&
         (teamsSorted[i].solved !== teamsSorted[i - 1].solved ||
