@@ -106,10 +106,10 @@ class Scoreboard extends Component {
               currTeam.isFirstToSolve[problemIndex] = 1;
             }
             currTeam.solved++;
+            // Update accepted problem only if has not been accepted before.
+            currTeam.isProblemSolved[problemIndex] = 1;
           }
         }
-        // Update accepted problem only if has not been accepted before.
-        currTeam.isProblemSolved[problemIndex] = 1;
         currTeam.penaltyOnProblem[problemIndex] += submission.penalty;
         currTeam.penalty += submission.penalty;
 
@@ -123,22 +123,13 @@ class Scoreboard extends Component {
 
   sortTeams(teams) {
     let teamsSorted = teams.sort(function (a, b) {
-      if (a.solved !== b.solved) {
-        return b.solved - a.solved;
+      if(a.totalScore === b.totalScore){
+        return b.penalty < a.penalty ? 1 : 0;
       }
-      return a.penalty - b.penalty;
+      return a.totalScore < b.totalScore ? 1 : 0;
     });
-
-    let position = 1;
     for (let i = 0; i < teamsSorted.length; i++) {
-      if (
-        i > 0 &&
-        (teamsSorted[i].solved !== teamsSorted[i - 1].solved ||
-          teamsSorted[i].penalty !== teamsSorted[i - 1].penalty)
-      ) {
-        position++;
-      }
-      teamsSorted[i].position = position;
+      teamsSorted[i].position = i+1;
     }
     return teamsSorted;
   }

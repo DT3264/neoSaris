@@ -183,7 +183,17 @@ class TableRow extends Component {
     let team = this.props.team;
     for (let i = 0; i < this.props.numberOfProblems; i++) {
       if (this.props.problems[i].index === problemLetter) {
-        return "Mejor: " + team.problemScore[i].toFixed(2);
+        return team.problemScore[i].toFixed(2);
+      }
+    }
+    return problemLetter;
+  }
+
+  isPartiallySolved(problemLetter) {
+    let team = this.props.team;
+    for (let i = 0; i < this.props.numberOfProblems; i++) {
+      if (this.props.problems[i].index === problemLetter) {
+        return team.problemScore[i] > 0 && team.problemScore[i] < 100;
       }
     }
     return problemLetter;
@@ -206,6 +216,9 @@ class TableRow extends Component {
           verdict = "Accepted";
         }
         textToShowInProblem = this.numberOfTriesOnAcceptedProblem(problem.index);
+      } else if (this.isPartiallySolved(problem.index)) {
+        verdict = "Resolving";
+        textToShowInProblem = this.getBestScore(problem.index);
       } else if (this.isACurrentFrozenProblem(problem.index) === true) {
         verdict = "Resolving";
         textToShowInProblem = this.numberOfTriesOnFrozenProblem(problem.index);
@@ -216,7 +229,7 @@ class TableRow extends Component {
         verdict = "WrongAnswer";
         textToShowInProblem = this.numberOfTriesOnTriedProblem(problem.index);
       }
-      textToShowInProblem = this.getBestScore(problem.index);
+      // textToShowInProblem = this.getBestScore(problem.index);
 
       return {
         key: problem.index,
@@ -252,9 +265,9 @@ class TableRow extends Component {
           </div>
         </div>
         {/*ProblemsSolved*/}
-        <span className="tableRow-ResolvedProblems">{this.props.team.totalScore}</span>
+        <span className="tableRow-ResolvedProblems">{this.props.team.totalScore.toFixed(2)}</span>
         {/*Penalty*/}
-        <span className="tableRow-Penalty">{this.props.team.penalty}</span>
+        <span className="tableRow-Penalty">{this.props.team.penalty.toFixed(2)}</span>
       </div>
     );
   }
