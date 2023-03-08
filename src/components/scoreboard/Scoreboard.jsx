@@ -75,14 +75,14 @@ class Scoreboard extends Component {
     }
 
     submissions.forEach(submission =>{
+      let currTeam = teams.filter(t => t.name === submission.contestantName)[0];
+      let currProblem = this.props.submissionsData.problems.filter(p => p.index === submission.problemIndex)[0];
+      let problemIndex = this.props.submissionsData.problems.indexOf(currProblem);
       //Wrong Answer without penalty
       if (this.props.submissionsData.verdicts.wrongAnswerWithoutPenalty.includes(submission.verdict)) {
         // continue;
       } else if (this.props.submissionsData.verdicts.accepted.includes(submission.verdict)) {
         // Update accepted problem only if has not been accepted before.
-        let currTeam = teams.filter(t => t.name === submission.contestantName)[0];
-        let currProblem = this.props.submissionsData.problems.filter(p => p.index === submission.problemIndex)[0];
-        let problemIndex = this.props.submissionsData.problems.indexOf(currProblem);
         currTeam.isProblemSolved[problemIndex] = 1;
         currTeam.penaltyOnProblem[problemIndex] = submission.timeSubmitted;
         currTeam.penalty += submission.timeSubmitted + currTeam.triesOnProblems[problemIndex] * 20;
@@ -93,9 +93,6 @@ class Scoreboard extends Component {
         }
       } else {
         // Update penalty problem only if has not been accepted before.
-        let currTeam = teams.filter(t => t.name === submission.contestantName)[0];
-        let currProblem = this.props.submissionsData.problems.filter(p => p.index === submission.problemIndex)[0];
-        let problemIndex = this.props.submissionsData.problems.indexOf(currProblem);
         currTeam.triesOnProblems[problemIndex]++;
       }
     })
