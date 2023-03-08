@@ -88,10 +88,6 @@ class Scoreboard extends Component {
       } else if (this.props.submissionsData.verdicts.accepted.includes(submission.verdict)) {
         if(submission.verdict === "PA"){
 
-          if(submission.contestantName === "ccup2018-31(Crack)"){
-            console.log("En " + submission.problemIndex);
-            console.log(submission)
-          }
         }
         else if(submission.verdict === "AC"){
           if(currTeam.isProblemSolved[problemIndex] === 0){
@@ -99,13 +95,7 @@ class Scoreboard extends Component {
               problemHasBeenSolved[problemIndex] = 1;
               currTeam.isFirstToSolve[problemIndex] = 1;
             }
-            if(submission.contestantName === "ccup2018-31(Crack)"){
-              console.log("Llevaban " + currTeam.solved)
-            }
             currTeam.solved++;
-            if(submission.contestantName === "ccup2018-31(Crack)"){
-              console.log("Llevan " + currTeam.solved)
-            }
           }
         }
         // Update accepted problem only if has not been accepted before.
