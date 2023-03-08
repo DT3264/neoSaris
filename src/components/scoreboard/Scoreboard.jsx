@@ -81,6 +81,7 @@ class Scoreboard extends Component {
     }
 
     submissions.forEach(submission =>{
+      if(submission.problemIndex === "D" && submission.contestantName === "ccup2018-18(E3)") console.log(submission)
       let currTeam = teams.filter(t => t.name === submission.contestantName)[0];
       let currProblem = this.props.submissionsData.problems.filter(p => p.index === submission.problemIndex)[0];
       let problemIndex = this.props.submissionsData.problems.indexOf(currProblem);
@@ -95,6 +96,14 @@ class Scoreboard extends Component {
           // update score
           currTeam.problemScore[problemIndex] = submission.problemScore;
           currTeam.totalScore += submission.problemScore;
+
+
+          // Adds penalty as omegaup says
+          // gets extra penalty
+          let extraPenalty = currTeam.triesOnProblems[problemIndex] * 10;
+          currTeam.penalty -= currTeam.penaltyOnProblem[problemIndex];
+          currTeam.penaltyOnProblem[problemIndex] = submission.penalty + extraPenalty;
+          currTeam.penalty += submission.penalty + extraPenalty;
         }
 
         if(submission.verdict === "PA"){
@@ -110,8 +119,8 @@ class Scoreboard extends Component {
             currTeam.isProblemSolved[problemIndex] = 1;
           }
         }
-        currTeam.penaltyOnProblem[problemIndex] += submission.penalty;
-        currTeam.penalty += submission.penalty;
+
+        currTeam.triesOnProblems[problemIndex]++;
 
       } else {
         // Update penalty problem only if has not been accepted before.

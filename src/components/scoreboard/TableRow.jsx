@@ -33,7 +33,7 @@ class TableRow extends Component {
     let team = this.props.team;
     for (let i = 0; i < this.props.numberOfProblems; i++) {
       if (this.props.problems[i].index === problemLetter) {
-        return team.triesOnProblems[i] + " - " + team.penaltyOnProblem[i];
+        return `${team.penaltyOnProblem[i]} (${team.triesOnProblems[i]})`;
       }
     }
     return problemLetter;
@@ -199,6 +199,31 @@ class TableRow extends Component {
     return problemLetter;
   }
 
+  getPenalty(problemLetter) {
+    let team = this.props.team;
+    for (let i = 0; i < this.props.numberOfProblems; i++) {
+      if (this.props.problems[i].index === problemLetter) {
+        return team.penaltyOnProblem[i];
+      }
+    }
+    return problemLetter;
+  }
+  getTries(problemLetter) {
+    let team = this.props.team;
+    for (let i = 0; i < this.props.numberOfProblems; i++) {
+      if (this.props.problems[i].index === problemLetter) {
+        return team.triesOnProblems[i];
+      }
+    }
+    return problemLetter;
+  }
+
+  obtenerEnviosTotales(team) {
+    let envios = 0;
+    team.triesOnProblems.forEach(t => envios+=t);
+    return envios;
+  }
+
   render() {
     let problems = this.props.problems;
 
@@ -215,10 +240,10 @@ class TableRow extends Component {
         } else {
           verdict = "Accepted";
         }
-        textToShowInProblem = this.numberOfTriesOnAcceptedProblem(problem.index);
+        textToShowInProblem = `${this.numberOfTriesOnAcceptedProblem(problem.index)} ${this.getPenalty(problem.index)} (${this.getTries(problem.index)})`;
       } else if (this.isPartiallySolved(problem.index)) {
         verdict = "Resolving";
-        textToShowInProblem = this.getBestScore(problem.index);
+        textToShowInProblem = `${problem.index} +${this.getBestScore(problem.index)} ${this.getPenalty(problem.index)} (${this.getTries(problem.index)})`;
       } else if (this.isACurrentFrozenProblem(problem.index) === true) {
         verdict = "Resolving";
         textToShowInProblem = this.numberOfTriesOnFrozenProblem(problem.index);
@@ -229,7 +254,6 @@ class TableRow extends Component {
         verdict = "WrongAnswer";
         textToShowInProblem = this.numberOfTriesOnTriedProblem(problem.index);
       }
-      // textToShowInProblem = this.getBestScore(problem.index);
 
       return {
         key: problem.index,
@@ -267,7 +291,7 @@ class TableRow extends Component {
         {/*ProblemsSolved*/}
         <span className="tableRow-ResolvedProblems">{this.props.team.totalScore.toFixed(2)}</span>
         {/*Penalty*/}
-        <span className="tableRow-Penalty">{this.props.team.penalty.toFixed(2)}</span>
+        <span className="tableRow-Penalty">{`${this.props.team.penalty.toFixed(2)}(${this.obtenerEnviosTotales(this.props.team)})`}</span>
       </div>
     );
   }
