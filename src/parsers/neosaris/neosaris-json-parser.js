@@ -32,7 +32,7 @@ const Data = z.object({
       contestantName: z.string(),
       problemIndex: z.string(),
       verdict: z.string(),
-      contest_score: z.number(),
+      problemScore: z.number(),
       penalty: z.number(),
     })
   ),

@@ -19,7 +19,7 @@ class Scoreboard extends Component {
         result.timeSubmitted = submission.timeSubmitted;
         result.verdict = submission.verdict;
         result.problemIndex = submission.problemIndex;
-        result.contest_score = submission.contest_score;
+        result.problemScore = submission.problemScore;
         result.penalty = submission.penalty;
         submissionsOnContest.push(result);
       }
@@ -41,7 +41,7 @@ class Scoreboard extends Component {
         result.timeSubmitted = submission.timeSubmitted;
         result.verdict = submission.verdict;
         result.problemIndex = submission.problemIndex;
-        result.contest_score = submission.contest_score;
+        result.problemScore = submission.problemScore;
         result.penalty = submission.penalty;
         if (submissionsData.verdicts.wrongAnswerWithoutPenalty.includes(result.verdict) === false) {
           submissionsOnFrozen.push(result);
@@ -57,11 +57,13 @@ class Scoreboard extends Component {
       currTeam.position = 0;
       currTeam.penalty = 0;
       currTeam.solved = 0;
+      currTeam.totalScore = 0;
       for (let j = 0; j < this.state.numberOfProblems; j++) {
         currTeam.isProblemSolved[j] = 0;
         currTeam.isFirstToSolve[j] = 0;
         currTeam.triesOnProblems[j] = 0;
         currTeam.penaltyOnProblem[j] = 0;
+        currTeam.problemScore[j] = 0;
       }
     }
     return teams;
@@ -86,8 +88,16 @@ class Scoreboard extends Component {
       if (this.props.submissionsData.verdicts.wrongAnswerWithoutPenalty.includes(submission.verdict)) {
         // continue;
       } else if (this.props.submissionsData.verdicts.accepted.includes(submission.verdict)) {
-        if(submission.verdict === "PA"){
+        // Updates best score
+        if (currTeam.problemScore[problemIndex] < submission.problemScore){
+          // substract previous score
+          currTeam.totalScore -= currTeam.problemScore[problemIndex];
+          // update score
+          currTeam.problemScore[problemIndex] = submission.problemScore;
+          currTeam.totalScore += submission.problemScore;
+        }
 
+        if(submission.verdict === "PA"){
         }
         else if(submission.verdict === "AC"){
           if(currTeam.isProblemSolved[problemIndex] === 0){
@@ -192,12 +202,14 @@ class Scoreboard extends Component {
       let triesOnProblems = [];
       let isProblemSolved = [];
       let penaltyOnProblem = [];
+      let problemScore = [];
       let isFirstToSolve = [];
       for (let j = 0; j < props.submissionsData.problems.length; j++) {
         isProblemSolved.push(0);
         isFirstToSolve.push(0);
         triesOnProblems.push(0);
         penaltyOnProblem.push(0);
+        problemScore.push(0);
       }
 
       let result = {};
@@ -206,10 +218,12 @@ class Scoreboard extends Component {
       result.id = contestant.id;
       result.penalty = 0;
       result.solved = 0;
+      result.totalScore = 0;
       result.isProblemSolved = isProblemSolved;
       result.isFirstToSolve = isFirstToSolve;
       result.triesOnProblems = triesOnProblems;
       result.penaltyOnProblem = penaltyOnProblem;
+      result.problemScore = problemScore;
       return result;
     });
 

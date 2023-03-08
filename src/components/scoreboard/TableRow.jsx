@@ -179,6 +179,15 @@ class TableRow extends Component {
       this.props.classNameForThisRow.length !== 0
     );
   }
+  getBestScore(problemLetter) {
+    let team = this.props.team;
+    for (let i = 0; i < this.props.numberOfProblems; i++) {
+      if (this.props.problems[i].index === problemLetter) {
+        return "Mejor: " + team.problemScore[i].toFixed(2);
+      }
+    }
+    return problemLetter;
+  }
 
   render() {
     let problems = this.props.problems;
@@ -207,6 +216,7 @@ class TableRow extends Component {
         verdict = "WrongAnswer";
         textToShowInProblem = this.numberOfTriesOnTriedProblem(problem.index);
       }
+      textToShowInProblem = this.getBestScore(problem.index);
 
       return {
         key: problem.index,
@@ -242,7 +252,7 @@ class TableRow extends Component {
           </div>
         </div>
         {/*ProblemsSolved*/}
-        <span className="tableRow-ResolvedProblems">{this.props.team.solved}</span>
+        <span className="tableRow-ResolvedProblems">{this.props.team.totalScore}</span>
         {/*Penalty*/}
         <span className="tableRow-Penalty">{this.props.team.penalty}</span>
       </div>
