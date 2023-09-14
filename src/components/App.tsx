@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import Scoreboard from "./scoreboard/Scoreboard";
 import WelcomeForm from "./Welcome";
 import Spinner from "./misc/Spinner";
 import { verifyNeoSarisJSON } from "../parsers/neosaris/neosaris-json-parser";
 import "./App.css";
 import { ContestData } from "../types/contestDataTypes";
+import FunctionalScoreboard from "./scoreboard/FunctionalScoreboard";
 
 const App = () => {
   const [step, setStep] = useState("form");
@@ -19,7 +19,7 @@ const App = () => {
     <div className="AppBackground">
       {step === "form" && <WelcomeForm setContestData={setContestDataWithLog} setStep={setStep} />}
       {step === "loading" && <Spinner />}
-      {step === "resolver" && <Scoreboard submissionsData={contestData} />}
+      {step === "resolver" && <FunctionalScoreboard contestData={contestData} />}
     </div>
   );
 };

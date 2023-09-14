@@ -502,50 +502,25 @@ class Scoreboard extends Component<IProps, IState> {
     });
   }
 
-  keyDownHandler(e: React.KeyboardEvent<HTMLDivElement>) {
-    switch (e.keyCode) {
-      case 78: //(N)ext Submission
-        if (this.state.isPressedKeyOn === 0 && this.state.contestantNameToSelect !== null) {
-          let idOfNextUserRowHighlighted = this.state.idOfNextUserRowHighlighted;
-          if (this.state.standingHasChangedInLastOperation === false) {
-            idOfNextUserRowHighlighted = Math.max(idOfNextUserRowHighlighted - 1, -1);
-          }
-          this.setState({
-            contestantNameToSelect: null,
-            standingHasChangedInLastOperation: false,
-            idOfNextUserRowHighlighted: idOfNextUserRowHighlighted,
-          });
-        } else {
-          this.findNextSubmissionToReveal();
-          let isPressedKeyOn = 1 - this.state.isPressedKeyOn;
-          this.setState({
-            isPressedKeyOn: isPressedKeyOn,
-            hasNotBeenScrolled: false,
-          });
-          this.scrollToElementSelected();
-        }
-        break;
-
-      case 70: //(F)ast Submission
-        //TODO: Implement Fast Submission, Reveal all pending solutions until AC or final WA
-        console.log("(F)ast Submission, not implemented yet");
-        break;
-
-      case 84: //(T)op 10 Standing
-        this.revealUntilTop(10);
-        break;
-
-      case 85: //(U)nfroze Standing
-        this.revealUntilTop(0);
-        break;
-
-      case 65: //(A)utomatic Reveal
-        //TODO: Implement automatic reveal, every X time reveal next submission
-        console.log("(A)utomatic Reveal, not implemented yet");
-        break;
-
-      default:
-        break;
+  keyNextSubmission() {
+    if (this.state.isPressedKeyOn === 0 && this.state.contestantNameToSelect !== null) {
+      let idOfNextUserRowHighlighted = this.state.idOfNextUserRowHighlighted;
+      if (this.state.standingHasChangedInLastOperation === false) {
+        idOfNextUserRowHighlighted = Math.max(idOfNextUserRowHighlighted - 1, -1);
+      }
+      this.setState({
+        contestantNameToSelect: null,
+        standingHasChangedInLastOperation: false,
+        idOfNextUserRowHighlighted: idOfNextUserRowHighlighted,
+      });
+    } else {
+      this.findNextSubmissionToReveal();
+      let isPressedKeyOn = 1 - this.state.isPressedKeyOn;
+      this.setState({
+        isPressedKeyOn: isPressedKeyOn,
+        hasNotBeenScrolled: false,
+      });
+      this.scrollToElementSelected();
     }
   }
 
@@ -567,12 +542,7 @@ class Scoreboard extends Component<IProps, IState> {
 
   render() {
     return (
-      <div
-        id="score"
-        className={"scoreboardTable"}
-        tabIndex={0}
-        onKeyDown={e => this.keyDownHandler(e)}
-      >
+      <div id="score" className={"scoreboardTable"} tabIndex={0}>
         <Header title={this.props.submissionsData.contestMetadata.name} />
         <div className="score-FlipMove" id="score-FlipMove">
           <FlipMove ref="flipMove" staggerDurationBy="10" duration={900}>
