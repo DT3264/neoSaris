@@ -68,6 +68,10 @@
   font-size: min(1.5vw, 18px);
 }
 
+.tableRow-Selected {
+  background: cadetblue;
+}
+
 .tableRox-ContestantName {
   color: white;
   font-family: Helvetica;

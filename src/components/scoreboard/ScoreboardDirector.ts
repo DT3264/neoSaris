@@ -10,9 +10,12 @@ type ProblemType = {
   penalty: number;
   isSolved: boolean;
   isFirstSolved: boolean;
+  isFrozen: boolean;
+  indexLetter: string;
+  nextSubmissionTime: number;
 };
 
-type TeamType = {
+export type TeamType = {
   unfrozenSubmissions: Submission[];
   frozenSubmissions: Submission[];
   position: number;
@@ -37,7 +40,7 @@ type ScoreboardType = {
   firstSolvedArray: string[];
 };
 
-type ScoreboardDirectorType = {
+export type ScoreboardDirectorType = {
   teams: TeamType[];
   scoreboard: ScoreboardType;
   indexOfNext: number;
@@ -48,12 +51,15 @@ function isSubmissionBeforeFrozen(submission: Submission, frozenTime: number) {
 }
 
 function getNewTeam(contestData: ContestData, contestantName: string) {
+  let currentIndex = 0;
   const problems = Array.from({ length: contestData.problems.length }, () => ({
     tries: 0,
     score: 0,
     penalty: 0,
     isSolved: false,
     isFirstSolved: false,
+    isFrozen: false,
+    indexLetter: getProblemIndexLetter(contestData.problems, currentIndex++).index,
   })) as ProblemType[];
   const contestantId = contestData.contestants.find(
     contestant => contestant.name === contestantName
@@ -84,8 +90,12 @@ function sortSubmissionsByTimeAndStatus(submissions: Submission[], contestData: 
   });
 }
 
-function getProblemIndex(problems: Problem[], problemIndex: string) {
+function getProblemIndexNumber(problems: Problem[], problemIndex: string) {
   return problems.findIndex(problem => problem.index === problemIndex);
+}
+
+function getProblemIndexLetter(problems: Problem[], index: number) {
+  return problems[index];
 }
 
 function isSubmissionAC(submission: Submission, accepted: string[]) {
@@ -101,7 +111,7 @@ function isSubmissionWAwPenalty(submission: Submission, verdicts: string[]) {
 }
 
 function processSubmission(submission: Submission, team: TeamType, scoreboard: ScoreboardType) {
-  const problemIndex = getProblemIndex(scoreboard.problems, submission.problemIndex);
+  const problemIndex = getProblemIndexNumber(scoreboard.problems, submission.problemIndex);
   const problem = team.problems[problemIndex];
   // If is WA without penalty, do nothing
   if (isSubmissionWAwNoPenalty(submission, scoreboard.verdicts.wrongAnswerWithoutPenalty)) {
@@ -136,6 +146,10 @@ function processSubmissionBeforeFreeze(
   processSubmission(submission, team, scoreboard);
 }
 
+function findNextSubmissionByProblemIndex(team: TeamType, problemIndex: string) {
+  return team.frozenSubmissions.find(s => s.problemIndex === problemIndex);
+}
+
 function processSubmissionAfterFreeze(
   submission: Submission,
   team: TeamType,
@@ -148,6 +162,11 @@ function processSubmissionAfterFreeze(
       s => s.problemIndex !== submission.problemIndex
     );
   }
+  team.problems.forEach(p => {
+    const nextSubmission = findNextSubmissionByProblemIndex(team, p.indexLetter);
+    p.isFrozen = nextSubmission !== undefined;
+    p.nextSubmissionTime = nextSubmission?.timeSubmitted!;
+  });
 }
 
 function processTeamsNextFrozenSubmission(team: TeamType, scoreboard: ScoreboardType) {
@@ -162,7 +181,7 @@ function processTeamsNextFrozenSubmission(team: TeamType, scoreboard: Scoreboard
 function getFirstSolvedOnEachProblem(submissions: Submission[], contestData: ContestData) {
   const solvedByTeam = new Array(contestData.problems.length).fill("");
   submissions.forEach(submission => {
-    const problemIndex = getProblemIndex(contestData.problems, submission.problemIndex);
+    const problemIndex = getProblemIndexNumber(contestData.problems, submission.problemIndex);
     if (
       isSubmissionAC(submission, contestData.verdicts.accepted) &&
       solvedByTeam[problemIndex] == ""
@@ -254,6 +273,21 @@ export function getInitialData(contestData: ContestData) {
     });
   });
 
+  teams.forEach(t => {
+    let frozenProblems = t.frozenSubmissions.map(s => s.problemIndex).sort();
+    frozenProblems = frozenProblems.filter((item, pos) => {
+      return frozenProblems.indexOf(item) == pos;
+    });
+    t.problems.forEach(p => {
+      if (frozenProblems.includes(p.indexLetter)) {
+        p.isFrozen = true;
+        p.nextSubmissionTime = t.frozenSubmissions.find(
+          s => s.problemIndex === p.indexLetter
+        )?.timeSubmitted!;
+      }
+    });
+  });
+
   return {
     teams: getScoreboardSortedTeams(teams),
     scoreboard: scoreboardData,
@@ -280,40 +314,3 @@ export function getNextData(scoreboardDirector: ScoreboardDirectorType) {
 function getDataBeforeNthPlace(nthPlace: number) {
   // TODO: Get data while indexOfNext < nthPlace
 }
-
-//   getScoreboard() {
-//     // This should be in the render method of Scoreboard.tsx, not here
-//     // return this.state.teams.map((team, i) => {
-//     //   let classNameForThisRow = "";
-//     //   if (this.state.isPressedKeyOn === 1 && this.state.idOfNextUserRowHighlighted === i) {
-//     //     if (this.state.hasUserFinishedSubmissions === true) {
-//     //       classNameForThisRow += " scoreboardTableSelectedRowFinished";
-//     //     } else {
-//     //       classNameForThisRow += " scoreboardTableSelectedRow";
-//     //     }
-//     //   } else if (
-//     //     this.state.isPressedKeyOn === 0 &&
-//     //     this.state.contestantNameToSelect === team.name
-//     //   ) {
-//     //     if (this.state.standingHasChangedInLastOperation === false) {
-//     //       classNameForThisRow += " scoreboardTableSelectedRowFinished";
-//     //     } else {
-//     //       classNameForThisRow += " scoreboardTableSelectedRow";
-//     //     }
-//     //   }
-//     //   return (
-//     //     <TableRow
-//     //       key={team.id}
-//     //       //   view={this.state.view}
-//     //       index={i}
-//     //       team={team}
-//     //       numberOfProblems={this.state.numberOfProblems}
-//     //       problems={this.props.submissionsData.problems}
-//     //       submissionWhenFrozen={this.state.submissionWhenFrozen}
-//     //       currentFrozenSubmission={this.state.savedCurrentFrozenSubmission}
-//     //       savedCurrentFrozenSubmission={this.state.currentFrozenSubmission}
-//     //       classNameForThisRow={classNameForThisRow}
-//     //     />
-//     //   );
-//     // });
-//   }

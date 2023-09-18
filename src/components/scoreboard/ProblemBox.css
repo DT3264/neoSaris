@@ -30,6 +30,12 @@
   border: 2px solid #ffff08;
 }
 
+.problemBox-Partial {
+  color: white;
+  background-color: #ff6600;
+  border: 2px solid #ffff08;
+}
+
 .problemBox-Pending {
   color: white;
   background-color: #cbb000;
