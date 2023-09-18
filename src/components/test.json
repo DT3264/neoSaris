@@ -1,0 +1,1778 @@
+{
+    "contestMetadata": {
+      "duration": 185,
+      "frozenTimeDuration": 60,
+      "name": "XV Concurso Anual de Programación Donald Knuth (División Presencial)",
+      "type": "ICPC"
+    },
+    "problems": [
+      {
+        "index": "A",
+        "name": "CAPDK 2023"
+      },
+      {
+        "index": "B",
+        "name": "Sierpiński Triangle"
+      },
+      {
+        "index": "C",
+        "name": "Carnival Rearrangement "
+      },
+      {
+        "index": "D",
+        "name": "Metro"
+      },
+      {
+        "index": "E",
+        "name": "Master Huron"
+      },
+      {
+        "index": "F",
+        "name": "ABC String"
+      },
+      {
+        "index": "G",
+        "name": "Creating Arrays"
+      },
+      {
+        "index": "H",
+        "name": "Huron Park"
+      },
+      {
+        "index": "I",
+        "name": "Hiking Views"
+      }
+    ],
+    "contestants": [
+      {
+        "id": 0,
+        "name": "MateoCV"
+      },
+      {
+        "id": 1,
+        "name": "Zawos"
+      },
+      {
+        "id": 2,
+        "name": "JorgeIbanez"
+      },
+      {
+        "id": 3,
+        "name": "IvanBorquez"
+      },
+      {
+        "id": 4,
+        "name": "Franco1010"
+      },
+      {
+        "id": 5,
+        "name": "AlexRex0"
+      },
+      {
+        "id": 6,
+        "name": "crystaalroo"
+      },
+      {
+        "id": 7,
+        "name": "Leonardo_Toral"
+      },
+      {
+        "id": 8,
+        "name": "ivalolre"
+      },
+      {
+        "id": 9,
+        "name": "DonyAyala"
+      },
+      {
+        "id": 10,
+        "name": "AlexJzG"
+      },
+      {
+        "id": 11,
+        "name": "EsmeGod"
+      },
+      {
+        "id": 12,
+        "name": "MelitoMT"
+      },
+      {
+        "id": 13,
+        "name": "Ponsomby19"
+      },
+      {
+        "id": 14,
+        "name": "TonyRusher"
+      },
+      {
+        "id": 15,
+        "name": "Jaeblack"
+      },
+      {
+        "id": 16,
+        "name": "rebelFish7"
+      },
+      {
+        "id": 17,
+        "name": "MAzul"
+      },
+      {
+        "id": 18,
+        "name": "Lithiumx"
+      },
+      {
+        "id": 19,
+        "name": "Palmerin"
+      },
+      {
+        "id": 20,
+        "name": "NomadOfNowhere"
+      },
+      {
+        "id": 21,
+        "name": "YeshuGrace"
+      },
+      {
+        "id": 22,
+        "name": "DGVL1705"
+      },
+      {
+        "id": 23,
+        "name": "UnlivedLeech01"
+      },
+      {
+        "id": 24,
+        "name": "Focil"
+      },
+      {
+        "id": 25,
+        "name": "JakeMate14"
+      },
+      {
+        "id": 26,
+        "name": "ArtieAaron"
+      },
+      {
+        "id": 27,
+        "name": "GustavoZaraT"
+      },
+      {
+        "id": 28,
+        "name": "Starboyhg"
+      },
+      {
+        "id": 29,
+        "name": "Cipri"
+      },
+      {
+        "id": 30,
+        "name": "Feisted238"
+      },
+      {
+        "id": 31,
+        "name": "Gzuz0"
+      },
+      {
+        "id": 32,
+        "name": "HaniHoney"
+      },
+      {
+        "id": 33,
+        "name": "ErickFrancisco"
+      },
+      {
+        "id": 34,
+        "name": "shucshin"
+      },
+      {
+        "id": 35,
+        "name": "charlyjoe"
+      },
+      {
+        "id": 36,
+        "name": "abraham201918"
+      },
+      {
+        "id": 37,
+        "name": "31416ka"
+      },
+      {
+        "id": 38,
+        "name": "danahe"
+      },
+      {
+        "id": 39,
+        "name": "ZaikKo"
+      },
+      {
+        "id": 40,
+        "name": "nekochan39"
+      },
+      {
+        "id": 41,
+        "name": "lrosasr"
+      },
+      {
+        "id": 42,
+        "name": "axel.coria304"
+      },
+      {
+        "id": 43,
+        "name": "IvsaiM"
+      },
+      {
+        "id": 44,
+        "name": "AtlantisPablo"
+      },
+      {
+        "id": 45,
+        "name": "Luis_Dogo"
+      },
+      {
+        "id": 46,
+        "name": "ixch3l"
+      },
+      {
+        "id": 47,
+        "name": "Charteck"
+      },
+      {
+        "id": 48,
+        "name": "Darfonius"
+      },
+      {
+        "id": 49,
+        "name": "palma_ph18"
+      },
+      {
+        "id": 50,
+        "name": "andresarguelles"
+      }
+    ],
+    "verdicts": {
+      "accepted": [
+        "OK",
+        "PARTIAL"
+      ],
+      "wrongAnswerWithPenalty": [
+        "FAILED",
+        "RUNTIME_ERROR",
+        "WRONG_ANSWER",
+        "PRESENTATION_ERROR",
+        "TIME_LIMIT_EXCEEDED",
+        "MEMORY_LIMIT_EXCEEDED",
+        "IDLENESS_LIMIT_EXCEEDED",
+        "SECURITY_VIOLATED",
+        "CRASHED",
+        "INPUT_PREPARATION_CRASHED",
+        "CHALLENGED",
+        "REJECTED",
+        "SKIPPED"
+      ],
+      "wrongAnswerWithoutPenalty": [
+        "COMPILATION_ERROR"
+      ]
+    },
+    "submissions": [
+      {
+        "timeSubmitted": 184,
+        "contestantName": "JorgeIbanez",
+        "problemIndex": "F",
+        "verdict": "COMPILATION_ERROR"
+      },
+      {
+        "timeSubmitted": 184,
+        "contestantName": "shucshin",
+        "problemIndex": "B",
+        "verdict": "RUNTIME_ERROR"
+      },
+      {
+        "timeSubmitted": 184,
+        "contestantName": "crystaalroo",
+        "problemIndex": "E",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 183,
+        "contestantName": "MateoCV",
+        "problemIndex": "H",
+        "verdict": "MEMORY_LIMIT_EXCEEDED"
+      },
+      {
+        "timeSubmitted": 183,
+        "contestantName": "palma_ph18",
+        "problemIndex": "C",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 182,
+        "contestantName": "palma_ph18",
+        "problemIndex": "C",
+        "verdict": "COMPILATION_ERROR"
+      },
+      {
+        "timeSubmitted": 182,
+        "contestantName": "NomadOfNowhere",
+        "problemIndex": "D",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 181,
+        "contestantName": "ixch3l",
+        "problemIndex": "C",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 181,
+        "contestantName": "Cipri",
+        "problemIndex": "C",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 181,
+        "contestantName": "NomadOfNowhere",
+        "problemIndex": "D",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 179,
+        "contestantName": "NomadOfNowhere",
+        "problemIndex": "D",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 178,
+        "contestantName": "NomadOfNowhere",
+        "problemIndex": "D",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 178,
+        "contestantName": "EsmeGod",
+        "problemIndex": "D",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 177,
+        "contestantName": "MateoCV",
+        "problemIndex": "I",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 175,
+        "contestantName": "shucshin",
+        "problemIndex": "B",
+        "verdict": "RUNTIME_ERROR"
+      },
+      {
+        "timeSubmitted": 175,
+        "contestantName": "DGVL1705",
+        "problemIndex": "C",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 173,
+        "contestantName": "HaniHoney",
+        "problemIndex": "C",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 173,
+        "contestantName": "DGVL1705",
+        "problemIndex": "C",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 172,
+        "contestantName": "ixch3l",
+        "problemIndex": "C",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 170,
+        "contestantName": "DonyAyala",
+        "problemIndex": "D",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 169,
+        "contestantName": "ivalolre",
+        "problemIndex": "E",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 168,
+        "contestantName": "charlyjoe",
+        "problemIndex": "A",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 167,
+        "contestantName": "Feisted238",
+        "problemIndex": "C",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 166,
+        "contestantName": "DGVL1705",
+        "problemIndex": "C",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 166,
+        "contestantName": "Leonardo_Toral",
+        "problemIndex": "E",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 165,
+        "contestantName": "Lithiumx",
+        "problemIndex": "C",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 165,
+        "contestantName": "Jaeblack",
+        "problemIndex": "C",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 164,
+        "contestantName": "Leonardo_Toral",
+        "problemIndex": "E",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 164,
+        "contestantName": "andresarguelles",
+        "problemIndex": "C",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 164,
+        "contestantName": "Leonardo_Toral",
+        "problemIndex": "E",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 163,
+        "contestantName": "Leonardo_Toral",
+        "problemIndex": "E",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 163,
+        "contestantName": "ArtieAaron",
+        "problemIndex": "C",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 163,
+        "contestantName": "Leonardo_Toral",
+        "problemIndex": "E",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 162,
+        "contestantName": "Leonardo_Toral",
+        "problemIndex": "E",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 162,
+        "contestantName": "Leonardo_Toral",
+        "problemIndex": "E",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 161,
+        "contestantName": "Leonardo_Toral",
+        "problemIndex": "E",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 160,
+        "contestantName": "Charteck",
+        "problemIndex": "C",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 160,
+        "contestantName": "Leonardo_Toral",
+        "problemIndex": "E",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 158,
+        "contestantName": "Jaeblack",
+        "problemIndex": "C",
+        "verdict": "TIME_LIMIT_EXCEEDED"
+      },
+      {
+        "timeSubmitted": 158,
+        "contestantName": "MAzul",
+        "problemIndex": "C",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 158,
+        "contestantName": "Palmerin",
+        "problemIndex": "D",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 157,
+        "contestantName": "Cipri",
+        "problemIndex": "C",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 156,
+        "contestantName": "andresarguelles",
+        "problemIndex": "C",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 155,
+        "contestantName": "DonyAyala",
+        "problemIndex": "D",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 154,
+        "contestantName": "MAzul",
+        "problemIndex": "C",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 152,
+        "contestantName": "Cipri",
+        "problemIndex": "C",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 152,
+        "contestantName": "MateoCV",
+        "problemIndex": "G",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 146,
+        "contestantName": "AlexJzG",
+        "problemIndex": "D",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 146,
+        "contestantName": "Palmerin",
+        "problemIndex": "D",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 144,
+        "contestantName": "MateoCV",
+        "problemIndex": "G",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 141,
+        "contestantName": "AlexJzG",
+        "problemIndex": "D",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 140,
+        "contestantName": "AlexRex0",
+        "problemIndex": "E",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 138,
+        "contestantName": "Palmerin",
+        "problemIndex": "D",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 137,
+        "contestantName": "rebelFish7",
+        "problemIndex": "C",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 136,
+        "contestantName": "andresarguelles",
+        "problemIndex": "C",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 134,
+        "contestantName": "AlexRex0",
+        "problemIndex": "E",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 134,
+        "contestantName": "Palmerin",
+        "problemIndex": "D",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 133,
+        "contestantName": "Luis_Dogo",
+        "problemIndex": "B",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 133,
+        "contestantName": "DonyAyala",
+        "problemIndex": "D",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 132,
+        "contestantName": "Palmerin",
+        "problemIndex": "D",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 129,
+        "contestantName": "Palmerin",
+        "problemIndex": "D",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 129,
+        "contestantName": "andresarguelles",
+        "problemIndex": "C",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 127,
+        "contestantName": "HaniHoney",
+        "problemIndex": "C",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 126,
+        "contestantName": "Zawos",
+        "problemIndex": "F",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 126,
+        "contestantName": "UnlivedLeech01",
+        "problemIndex": "B",
+        "verdict": "COMPILATION_ERROR"
+      },
+      {
+        "timeSubmitted": 125,
+        "contestantName": "andresarguelles",
+        "problemIndex": "I",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 125,
+        "contestantName": "rebelFish7",
+        "problemIndex": "C",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 124,
+        "contestantName": "NomadOfNowhere",
+        "problemIndex": "A",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 123,
+        "contestantName": "ArtieAaron",
+        "problemIndex": "B",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 120,
+        "contestantName": "TonyRusher",
+        "problemIndex": "D",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 118,
+        "contestantName": "ArtieAaron",
+        "problemIndex": "B",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 118,
+        "contestantName": "Starboyhg",
+        "problemIndex": "B",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 116,
+        "contestantName": "ArtieAaron",
+        "problemIndex": "B",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 116,
+        "contestantName": "Cipri",
+        "problemIndex": "C",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 114,
+        "contestantName": "Starboyhg",
+        "problemIndex": "B",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 113,
+        "contestantName": "MelitoMT",
+        "problemIndex": "C",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 110,
+        "contestantName": "Zawos",
+        "problemIndex": "F",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 110,
+        "contestantName": "Starboyhg",
+        "problemIndex": "B",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 110,
+        "contestantName": "Franco1010",
+        "problemIndex": "E",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 110,
+        "contestantName": "DonyAyala",
+        "problemIndex": "D",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 110,
+        "contestantName": "Luis_Dogo",
+        "problemIndex": "B",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 109,
+        "contestantName": "DonyAyala",
+        "problemIndex": "D",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 109,
+        "contestantName": "GustavoZaraT",
+        "problemIndex": "C",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 108,
+        "contestantName": "Starboyhg",
+        "problemIndex": "B",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 107,
+        "contestantName": "Focil",
+        "problemIndex": "C",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 105,
+        "contestantName": "DGVL1705",
+        "problemIndex": "C",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 102,
+        "contestantName": "Palmerin",
+        "problemIndex": "D",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 102,
+        "contestantName": "EsmeGod",
+        "problemIndex": "B",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 101,
+        "contestantName": "Lithiumx",
+        "problemIndex": "B",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 101,
+        "contestantName": "Ponsomby19",
+        "problemIndex": "C",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 101,
+        "contestantName": "Jaeblack",
+        "problemIndex": "D",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 101,
+        "contestantName": "palma_ph18",
+        "problemIndex": "A",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 100,
+        "contestantName": "IvanBorquez",
+        "problemIndex": "E",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 99,
+        "contestantName": "Starboyhg",
+        "problemIndex": "B",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 97,
+        "contestantName": "Jaeblack",
+        "problemIndex": "D",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 95,
+        "contestantName": "ivalolre",
+        "problemIndex": "B",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 95,
+        "contestantName": "UnlivedLeech01",
+        "problemIndex": "C",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 94,
+        "contestantName": "AlexJzG",
+        "problemIndex": "B",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 94,
+        "contestantName": "TonyRusher",
+        "problemIndex": "D",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 94,
+        "contestantName": "ivalolre",
+        "problemIndex": "B",
+        "verdict": "COMPILATION_ERROR"
+      },
+      {
+        "timeSubmitted": 88,
+        "contestantName": "MateoCV",
+        "problemIndex": "F",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 87,
+        "contestantName": "UnlivedLeech01",
+        "problemIndex": "C",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 85,
+        "contestantName": "JakeMate14",
+        "problemIndex": "B",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 84,
+        "contestantName": "crystaalroo",
+        "problemIndex": "D",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 84,
+        "contestantName": "HaniHoney",
+        "problemIndex": "C",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 83,
+        "contestantName": "charlyjoe",
+        "problemIndex": "C",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 83,
+        "contestantName": "Palmerin",
+        "problemIndex": "D",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 82,
+        "contestantName": "AlexRex0",
+        "problemIndex": "D",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 80,
+        "contestantName": "HaniHoney",
+        "problemIndex": "C",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 78,
+        "contestantName": "AlexRex0",
+        "problemIndex": "D",
+        "verdict": "TIME_LIMIT_EXCEEDED"
+      },
+      {
+        "timeSubmitted": 78,
+        "contestantName": "ivalolre",
+        "problemIndex": "D",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 77,
+        "contestantName": "ivalolre",
+        "problemIndex": "D",
+        "verdict": "RUNTIME_ERROR"
+      },
+      {
+        "timeSubmitted": 77,
+        "contestantName": "YeshuGrace",
+        "problemIndex": "C",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 76,
+        "contestantName": "GustavoZaraT",
+        "problemIndex": "B",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 75,
+        "contestantName": "JakeMate14",
+        "problemIndex": "B",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 75,
+        "contestantName": "JorgeIbanez",
+        "problemIndex": "E",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 74,
+        "contestantName": "GustavoZaraT",
+        "problemIndex": "B",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 73,
+        "contestantName": "JakeMate14",
+        "problemIndex": "B",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 72,
+        "contestantName": "GustavoZaraT",
+        "problemIndex": "B",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 71,
+        "contestantName": "IvanBorquez",
+        "problemIndex": "D",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 71,
+        "contestantName": "nekochan39",
+        "problemIndex": "C",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 70,
+        "contestantName": "ivalolre",
+        "problemIndex": "D",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 70,
+        "contestantName": "danahe",
+        "problemIndex": "B",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 69,
+        "contestantName": "Ponsomby19",
+        "problemIndex": "B",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 69,
+        "contestantName": "AlexJzG",
+        "problemIndex": "C",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 68,
+        "contestantName": "DonyAyala",
+        "problemIndex": "C",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 67,
+        "contestantName": "ivalolre",
+        "problemIndex": "D",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 66,
+        "contestantName": "Zawos",
+        "problemIndex": "E",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 66,
+        "contestantName": "abraham201918",
+        "problemIndex": "C",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 66,
+        "contestantName": "palma_ph18",
+        "problemIndex": "A",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 64,
+        "contestantName": "EsmeGod",
+        "problemIndex": "C",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 63,
+        "contestantName": "GustavoZaraT",
+        "problemIndex": "B",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 62,
+        "contestantName": "Focil",
+        "problemIndex": "B",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 61,
+        "contestantName": "GustavoZaraT",
+        "problemIndex": "B",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 61,
+        "contestantName": "UnlivedLeech01",
+        "problemIndex": "B",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 58,
+        "contestantName": "Luis_Dogo",
+        "problemIndex": "C",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 58,
+        "contestantName": "AlexJzG",
+        "problemIndex": "C",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 57,
+        "contestantName": "Focil",
+        "problemIndex": "B",
+        "verdict": "TIME_LIMIT_EXCEEDED"
+      },
+      {
+        "timeSubmitted": 57,
+        "contestantName": "JakeMate14",
+        "problemIndex": "B",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 56,
+        "contestantName": "Focil",
+        "problemIndex": "B",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 56,
+        "contestantName": "DGVL1705",
+        "problemIndex": "B",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 55,
+        "contestantName": "MateoCV",
+        "problemIndex": "E",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 55,
+        "contestantName": "GustavoZaraT",
+        "problemIndex": "B",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 54,
+        "contestantName": "Franco1010",
+        "problemIndex": "D",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 54,
+        "contestantName": "JorgeIbanez",
+        "problemIndex": "D",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 50,
+        "contestantName": "Leonardo_Toral",
+        "problemIndex": "D",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 50,
+        "contestantName": "Zawos",
+        "problemIndex": "D",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 49,
+        "contestantName": "GustavoZaraT",
+        "problemIndex": "B",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 49,
+        "contestantName": "Darfonius",
+        "problemIndex": "A",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 47,
+        "contestantName": "rebelFish7",
+        "problemIndex": "B",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 46,
+        "contestantName": "shucshin",
+        "problemIndex": "C",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 46,
+        "contestantName": "Luis_Dogo",
+        "problemIndex": "C",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 46,
+        "contestantName": "MAzul",
+        "problemIndex": "B",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 45,
+        "contestantName": "rebelFish7",
+        "problemIndex": "B",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 43,
+        "contestantName": "crystaalroo",
+        "problemIndex": "C",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 42,
+        "contestantName": "MelitoMT",
+        "problemIndex": "B",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 41,
+        "contestantName": "MateoCV",
+        "problemIndex": "D",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 39,
+        "contestantName": "Palmerin",
+        "problemIndex": "C",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 38,
+        "contestantName": "YeshuGrace",
+        "problemIndex": "B",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 38,
+        "contestantName": "MelitoMT",
+        "problemIndex": "B",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 37,
+        "contestantName": "ivalolre",
+        "problemIndex": "C",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 35,
+        "contestantName": "MateoCV",
+        "problemIndex": "D",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 35,
+        "contestantName": "ivalolre",
+        "problemIndex": "C",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 34,
+        "contestantName": "Darfonius",
+        "problemIndex": "A",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 32,
+        "contestantName": "AlexRex0",
+        "problemIndex": "B",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 32,
+        "contestantName": "JorgeIbanez",
+        "problemIndex": "C",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 32,
+        "contestantName": "Darfonius",
+        "problemIndex": "A",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 31,
+        "contestantName": "Charteck",
+        "problemIndex": "A",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 31,
+        "contestantName": "AlexJzG",
+        "problemIndex": "C",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 31,
+        "contestantName": "IvanBorquez",
+        "problemIndex": "C",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 31,
+        "contestantName": "Charteck",
+        "problemIndex": "A",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 29,
+        "contestantName": "AtlantisPablo",
+        "problemIndex": "A",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 29,
+        "contestantName": "Franco1010",
+        "problemIndex": "C",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 28,
+        "contestantName": "Charteck",
+        "problemIndex": "A",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 28,
+        "contestantName": "NomadOfNowhere",
+        "problemIndex": "B",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 27,
+        "contestantName": "Darfonius",
+        "problemIndex": "A",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 27,
+        "contestantName": "NomadOfNowhere",
+        "problemIndex": "B",
+        "verdict": "COMPILATION_ERROR"
+      },
+      {
+        "timeSubmitted": 27,
+        "contestantName": "Franco1010",
+        "problemIndex": "C",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 25,
+        "contestantName": "Leonardo_Toral",
+        "problemIndex": "C",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 25,
+        "contestantName": "Zawos",
+        "problemIndex": "B",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 25,
+        "contestantName": "Leonardo_Toral",
+        "problemIndex": "C",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 24,
+        "contestantName": "TonyRusher",
+        "problemIndex": "B",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 24,
+        "contestantName": "Leonardo_Toral",
+        "problemIndex": "C",
+        "verdict": "COMPILATION_ERROR"
+      },
+      {
+        "timeSubmitted": 24,
+        "contestantName": "IvsaiM",
+        "problemIndex": "A",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 23,
+        "contestantName": "axel.coria304",
+        "problemIndex": "A",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 23,
+        "contestantName": "TonyRusher",
+        "problemIndex": "B",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 22,
+        "contestantName": "Jaeblack",
+        "problemIndex": "B",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 22,
+        "contestantName": "ixch3l",
+        "problemIndex": "A",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 21,
+        "contestantName": "IvanBorquez",
+        "problemIndex": "B",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 18,
+        "contestantName": "crystaalroo",
+        "problemIndex": "B",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 18,
+        "contestantName": "Leonardo_Toral",
+        "problemIndex": "C",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 18,
+        "contestantName": "DGVL1705",
+        "problemIndex": "A",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 17,
+        "contestantName": "DonyAyala",
+        "problemIndex": "B",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 17,
+        "contestantName": "MateoCV",
+        "problemIndex": "C",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 17,
+        "contestantName": "ixch3l",
+        "problemIndex": "A",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 16,
+        "contestantName": "Zawos",
+        "problemIndex": "C",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 15,
+        "contestantName": "Franco1010",
+        "problemIndex": "B",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 14,
+        "contestantName": "UnlivedLeech01",
+        "problemIndex": "A",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 14,
+        "contestantName": "lrosasr",
+        "problemIndex": "A",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 14,
+        "contestantName": "nekochan39",
+        "problemIndex": "A",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 11,
+        "contestantName": "AlexRex0",
+        "problemIndex": "C",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 11,
+        "contestantName": "MAzul",
+        "problemIndex": "A",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 10,
+        "contestantName": "danahe",
+        "problemIndex": "A",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 10,
+        "contestantName": "ZaikKo",
+        "problemIndex": "A",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 10,
+        "contestantName": "MateoCV",
+        "problemIndex": "B",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 10,
+        "contestantName": "JorgeIbanez",
+        "problemIndex": "B",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 10,
+        "contestantName": "Luis_Dogo",
+        "problemIndex": "A",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 9,
+        "contestantName": "ArtieAaron",
+        "problemIndex": "A",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 9,
+        "contestantName": "Luis_Dogo",
+        "problemIndex": "A",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 9,
+        "contestantName": "Focil",
+        "problemIndex": "A",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 8,
+        "contestantName": "crystaalroo",
+        "problemIndex": "A",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 8,
+        "contestantName": "Leonardo_Toral",
+        "problemIndex": "B",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 7,
+        "contestantName": "rebelFish7",
+        "problemIndex": "A",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 7,
+        "contestantName": "abraham201918",
+        "problemIndex": "A",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 7,
+        "contestantName": "Starboyhg",
+        "problemIndex": "A",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 7,
+        "contestantName": "31416ka",
+        "problemIndex": "A",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 7,
+        "contestantName": "Focil",
+        "problemIndex": "A",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 7,
+        "contestantName": "GustavoZaraT",
+        "problemIndex": "A",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 7,
+        "contestantName": "Ponsomby19",
+        "problemIndex": "A",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 6,
+        "contestantName": "Ponsomby19",
+        "problemIndex": "A",
+        "verdict": "COMPILATION_ERROR"
+      },
+      {
+        "timeSubmitted": 6,
+        "contestantName": "Franco1010",
+        "problemIndex": "A",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 6,
+        "contestantName": "Starboyhg",
+        "problemIndex": "A",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 5,
+        "contestantName": "charlyjoe",
+        "problemIndex": "A",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 5,
+        "contestantName": "Ponsomby19",
+        "problemIndex": "A",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 5,
+        "contestantName": "TonyRusher",
+        "problemIndex": "A",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 5,
+        "contestantName": "shucshin",
+        "problemIndex": "A",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 4,
+        "contestantName": "ErickFrancisco",
+        "problemIndex": "A",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 4,
+        "contestantName": "HaniHoney",
+        "problemIndex": "A",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 4,
+        "contestantName": "shucshin",
+        "problemIndex": "A",
+        "verdict": "COMPILATION_ERROR"
+      },
+      {
+        "timeSubmitted": 4,
+        "contestantName": "EsmeGod",
+        "problemIndex": "A",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 4,
+        "contestantName": "TonyRusher",
+        "problemIndex": "A",
+        "verdict": "WRONG_ANSWER"
+      },
+      {
+        "timeSubmitted": 4,
+        "contestantName": "MateoCV",
+        "problemIndex": "A",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 4,
+        "contestantName": "Zawos",
+        "problemIndex": "A",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 3,
+        "contestantName": "Gzuz0",
+        "problemIndex": "A",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 2,
+        "contestantName": "Feisted238",
+        "problemIndex": "A",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 2,
+        "contestantName": "YeshuGrace",
+        "problemIndex": "A",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 2,
+        "contestantName": "Jaeblack",
+        "problemIndex": "A",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 2,
+        "contestantName": "MelitoMT",
+        "problemIndex": "A",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 2,
+        "contestantName": "Cipri",
+        "problemIndex": "A",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 2,
+        "contestantName": "IvanBorquez",
+        "problemIndex": "A",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 2,
+        "contestantName": "Lithiumx",
+        "problemIndex": "A",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 1,
+        "contestantName": "JakeMate14",
+        "problemIndex": "A",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 1,
+        "contestantName": "DonyAyala",
+        "problemIndex": "A",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 1,
+        "contestantName": "AlexJzG",
+        "problemIndex": "A",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 1,
+        "contestantName": "JorgeIbanez",
+        "problemIndex": "A",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 1,
+        "contestantName": "Palmerin",
+        "problemIndex": "A",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 1,
+        "contestantName": "NomadOfNowhere",
+        "problemIndex": "A",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 1,
+        "contestantName": "ivalolre",
+        "problemIndex": "A",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 1,
+        "contestantName": "Leonardo_Toral",
+        "problemIndex": "A",
+        "verdict": "OK"
+      },
+      {
+        "timeSubmitted": 0,
+        "contestantName": "AlexRex0",
+        "problemIndex": "A",
+        "verdict": "OK"
+      }
+    ]
+  }
