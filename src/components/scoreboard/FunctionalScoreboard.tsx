@@ -35,6 +35,10 @@ export default function FunctionalScoreboard({ contestData }: { contestData: Con
     });
   };
 
+  useEffect(() => {
+    scrollToIndex(indexOfNext.current);
+  }, []);
+
   const updateScoreboard = (newData: ScoreboardDirectorType) => {
     indexOfNext.current = newData.indexOfNext;
     setScoreboardDirector(newData);
@@ -44,7 +48,6 @@ export default function FunctionalScoreboard({ contestData }: { contestData: Con
   const onNextSubmission = () => {
     if (indexOfNext.current === -1) return;
     const newData = getNextData(scoreboardDirector);
-    // console.log("New data", newData);
     updateScoreboard(newData);
   };
 
@@ -79,6 +82,7 @@ export default function FunctionalScoreboard({ contestData }: { contestData: Con
 
   scrollToIndex(scoreboardDirector.indexOfNext !== -1 ? scoreboardDirector.indexOfNext : 0);
   //   return <Scoreboard ref={scoreboardRef} submissionsData={contestData} />;
+  const hasAnyTeamMoved = scoreboardDirector.teams.some(t => t.moved);
   return (
     <>
       <div id="score" className={"scoreboardTable"} tabIndex={0}>
@@ -89,10 +93,8 @@ export default function FunctionalScoreboard({ contestData }: { contestData: Con
               {scoreboardDirector.teams.map((t, i) => (
                 <MyTableRow
                   team={t}
-                  isNext={i == indexOfNext.current || t.moved}
-                  movedUp={t.moved}
+                  isNext={i == indexOfNext.current && !hasAnyTeamMoved}
                   index={i}
-                  problems={scoreboardDirector.scoreboard.problems}
                   key={t.id}
                 />
               ))}
@@ -122,27 +124,15 @@ function MyProblemBox({
   );
 }
 
-function MyTableRow({
-  team,
-  isNext,
-  movedUp,
-  problems,
-  index,
-}: {
-  team: TeamType;
-  isNext: boolean;
-  movedUp: boolean;
-  problems: Problem[];
-  index: number;
-}) {
+function MyTableRow({ team, isNext, index }: { team: TeamType; isNext: boolean; index: number }) {
   return (
     <Flipped flipId={team.id}>
       <div
         className={classNames("tableRow", {
-          scoreboardTableBlackRow: index % 2 !== 0 && !isNext && !movedUp,
-          scoreboardTableGrayRow: index % 2 === 0 && !isNext && !movedUp,
+          scoreboardTableBlackRow: index % 2 !== 0 && !isNext && !team.moved,
+          scoreboardTableGrayRow: index % 2 === 0 && !isNext && !team.moved,
           "tableRow-Selected": isNext,
-          "tableRow-MovedUp": movedUp,
+          "tableRow-MovedUp": team.moved,
         })}
         id={team.id.toString()}
       >

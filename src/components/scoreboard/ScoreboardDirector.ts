@@ -167,11 +167,11 @@ function processSubmissionAfterFreeze(
       s => s.problemIndex !== submission.problemIndex
     );
   }
-  team.problems.forEach(p => {
-    const nextSubmission = findNextSubmissionByProblemIndex(team, p.indexLetter);
-    p.isFrozen = nextSubmission !== undefined;
-    p.nextSubmissionTime = nextSubmission?.timeSubmitted!;
-  });
+  // Get next submission's time for that problem
+  const currentProblem = team.problems.find(p => p.indexLetter === submission.problemIndex)!;
+  const nextSubmission = findNextSubmissionByProblemIndex(team, currentProblem.indexLetter);
+  currentProblem.isFrozen = nextSubmission !== undefined;
+  currentProblem.nextSubmissionTime = nextSubmission?.timeSubmitted!;
 }
 
 function processTeamsNextFrozenSubmission(team: TeamType, scoreboard: ScoreboardType) {
@@ -198,7 +198,7 @@ function getFirstSolvedOnEachProblem(submissions: Submission[], contestData: Con
 }
 
 // Sort teams by solvedCount, penalty, and firstToSolveIndex
-function getScoreboardSortedTeams(teams: TeamType[]) {
+function getScoreboardSortedTeams(teams: TeamType[], isInitialSort: boolean) {
   const sortedTeams = teams.sort((a, b) => {
     if (a.solvedCount !== b.solvedCount) {
       return b.solvedCount - a.solvedCount;
@@ -211,19 +211,21 @@ function getScoreboardSortedTeams(teams: TeamType[]) {
   let alreadySwitched = false;
   for (let i = 1; i < sortedTeams.length; i++) {
     const currentPosition = sortedTeams[i].position;
-    if (
+    const isTied =
       sortedTeams[i].solvedCount === sortedTeams[i - 1].solvedCount &&
-      sortedTeams[i].totalPenalty === sortedTeams[i - 1].totalPenalty
-    ) {
+      sortedTeams[i].totalPenalty === sortedTeams[i - 1].totalPenalty;
+    if (isTied) {
       sortedTeams[i].position = sortedTeams[i - 1].position;
     } else {
       sortedTeams[i].position = i + 1;
     }
-    if (sortedTeams[i].position !== currentPosition && !alreadySwitched) {
-      sortedTeams[i].moved = true;
-      alreadySwitched = true;
-    } else {
-      sortedTeams[i].moved = false;
+    if (!isInitialSort) {
+      if (sortedTeams[i].position !== currentPosition && !alreadySwitched) {
+        sortedTeams[i].moved = true;
+        alreadySwitched = true;
+      } else {
+        sortedTeams[i].moved = false;
+      }
     }
   }
   return sortedTeams;
@@ -304,22 +306,32 @@ export function getInitialData(contestData: ContestData) {
   });
 
   return {
-    teams: getScoreboardSortedTeams(teams).slice(0, 25),
+    teams: getScoreboardSortedTeams(teams, true),
     scoreboard: scoreboardData,
-    // indexOfNext: teams.length - 1,
-    indexOfNext: 24,
+    indexOfNext: teams.length - 1,
   } as ScoreboardDirectorType;
 }
 
 export function getNextData(scoreboardDirector: ScoreboardDirectorType) {
+  const movedTeam = scoreboardDirector.teams.find(t => t.moved);
+  console.log("MovedTeam:", movedTeam);
+  //   if (movedTeam !== undefined) {
+  //     movedTeam.moved = false;
+  //     return scoreboardDirector;
+  //   }
+
+  const team = scoreboardDirector.teams.findLast(t => !t.isDone);
+  if (team === undefined) {
+    return scoreboardDirector;
+  }
   // Get the team that is next to process indicated by indexOfNext
-  const team = scoreboardDirector.teams[scoreboardDirector.indexOfNext];
+  //   const team = scoreboardDirector.teams[scoreboardDirector.indexOfNext];
 
   // Process submission of the team indicated in indexOfNext
   processTeamsNextFrozenSubmission(team, scoreboardDirector.scoreboard);
 
   // After processing the submission, sort the teams
-  scoreboardDirector.teams = getScoreboardSortedTeams(scoreboardDirector.teams);
+  scoreboardDirector.teams = getScoreboardSortedTeams(scoreboardDirector.teams, false);
 
   // Index of next is the index of the last team that is not done
   scoreboardDirector.indexOfNext = scoreboardDirector.teams.findLastIndex(t => !t.isDone);
