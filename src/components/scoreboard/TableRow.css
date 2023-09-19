@@ -69,7 +69,11 @@
 }
 
 .tableRow-Selected {
-  background: cadetblue;
+  background: #2873ed;
+}
+
+.tableRow-MovedUp {
+  background: goldenrod;
 }
 
 .tableRox-ContestantName {

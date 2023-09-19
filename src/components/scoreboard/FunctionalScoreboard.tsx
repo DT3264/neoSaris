@@ -26,23 +26,18 @@ export default function FunctionalScoreboard({ contestData }: { contestData: Con
   const indexOfNext = useRef(scoreboardDirector.teams.length - 1);
 
   const scrollToIndex = (index: number) => {
-    setTimeout(() => {
-      if (containerRef.current) {
-        containerRef.current.children[index].scrollIntoView({
-          behavior: "auto",
-          block: "center",
-        });
-      }
-    }, 1);
+    containerRef.current?.children[index].scrollIntoView({
+      behavior: "auto",
+      block: "nearest",
+      inline: "nearest",
+    });
   };
 
   const updateScoreboard = (newData: ScoreboardDirectorType) => {
     indexOfNext.current = newData.indexOfNext;
     setScoreboardDirector(newData);
     setReloadId(prevReloadId => prevReloadId + 1);
-    if (newData.indexOfNext !== -1) {
-      scrollToIndex(newData.indexOfNext);
-    }
+    scrollToIndex(newData.indexOfNext !== -1 ? newData.indexOfNext : 0);
   };
   const onNextSubmission = () => {
     if (indexOfNext.current === -1) return;
@@ -79,9 +74,8 @@ export default function FunctionalScoreboard({ contestData }: { contestData: Con
   //(U)nfroze Standing
   useHotkeys("u", unfreeze);
   const scoreboardRef = useRef<Scoreboard>(null);
-  useEffect(() => {
-    scrollToIndex(scoreboardDirector.indexOfNext);
-  }, []);
+
+  scrollToIndex(scoreboardDirector.indexOfNext !== -1 ? scoreboardDirector.indexOfNext : 0);
   //   return <Scoreboard ref={scoreboardRef} submissionsData={contestData} />;
   return (
     <>
@@ -93,7 +87,8 @@ export default function FunctionalScoreboard({ contestData }: { contestData: Con
               {scoreboardDirector.teams.map((t, i) => (
                 <MyTableRow
                   team={t}
-                  isNext={i == indexOfNext.current}
+                  isNext={i == indexOfNext.current || t.moved}
+                  movedUp={t.moved}
                   index={i}
                   problems={scoreboardDirector.scoreboard.problems}
                   key={t.id}
@@ -128,22 +123,22 @@ function MyProblemBox({
 function MyTableRow({
   team,
   isNext,
+  movedUp,
   problems,
   index,
 }: {
   team: TeamType;
   isNext: boolean;
+  movedUp: boolean;
   problems: Problem[];
   index: number;
 }) {
   let classNameForThisRow = "";
   if (isNext) {
-    // if (team.isDone) {
-    //   classNameForThisRow += " scoreboardTableSelectedRowFinished";
-    // } else {
-    //   classNameForThisRow += " scoreboardTableSelectedRow";
-    // }
     classNameForThisRow += " tableRow-Selected";
+  }
+  if (movedUp) {
+    classNameForThisRow += " tableRow-MovedUp";
   }
   let classNameForEachRow = "scoreboardTableGrayRow";
   if (isNext) {

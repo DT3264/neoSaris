@@ -24,7 +24,11 @@ export type TeamType = {
   problems: ProblemType[];
   solvedCount: number;
   totalPenalty: number;
+  // Required because if we only check frozenSubmissions,
+  // teams with no frozen submission would be skipped
+  // and that would look clunky
   isDone: boolean;
+  moved: boolean;
 };
 
 type ScoreboardType = {
@@ -74,6 +78,7 @@ function getNewTeam(contestData: ContestData, contestantName: string) {
     solvedCount: 0,
     totalPenalty: 0,
     isDone: false,
+    moved: false,
   } as TeamType;
 }
 
@@ -201,7 +206,11 @@ function getScoreboardSortedTeams(teams: TeamType[]) {
     return a.totalPenalty - b.totalPenalty;
   });
   sortedTeams[0].position = 1;
+  // This is to detect if a team has been moved,
+  // if so, that's the team that moved up in the scoreboard
+  let alreadySwitched = false;
   for (let i = 1; i < sortedTeams.length; i++) {
+    const currentPosition = sortedTeams[i].position;
     if (
       sortedTeams[i].solvedCount === sortedTeams[i - 1].solvedCount &&
       sortedTeams[i].totalPenalty === sortedTeams[i - 1].totalPenalty
@@ -209,6 +218,12 @@ function getScoreboardSortedTeams(teams: TeamType[]) {
       sortedTeams[i].position = sortedTeams[i - 1].position;
     } else {
       sortedTeams[i].position = i + 1;
+    }
+    if (sortedTeams[i].position !== currentPosition && !alreadySwitched) {
+      sortedTeams[i].moved = true;
+      alreadySwitched = true;
+    } else {
+      sortedTeams[i].moved = false;
     }
   }
   return sortedTeams;
@@ -289,9 +304,10 @@ export function getInitialData(contestData: ContestData) {
   });
 
   return {
-    teams: getScoreboardSortedTeams(teams),
+    teams: getScoreboardSortedTeams(teams).slice(0, 25),
     scoreboard: scoreboardData,
-    indexOfNext: teams.length - 1,
+    // indexOfNext: teams.length - 1,
+    indexOfNext: 24,
   } as ScoreboardDirectorType;
 }
 
