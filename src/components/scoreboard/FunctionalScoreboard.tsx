@@ -82,7 +82,7 @@ export default function FunctionalScoreboard({ contestData }: { contestData: Con
 
   scrollToIndex(scoreboardDirector.indexOfNext !== -1 ? scoreboardDirector.indexOfNext : 0);
   //   return <Scoreboard ref={scoreboardRef} submissionsData={contestData} />;
-  const hasAnyTeamMoved = scoreboardDirector.teams.some(t => t.moved);
+  const hasAnyTeamMoved = scoreboardDirector.teams.some(t => t.movedUp);
   return (
     <>
       <div id="score" className={"scoreboardTable"} tabIndex={0}>
@@ -106,19 +106,35 @@ export default function FunctionalScoreboard({ contestData }: { contestData: Con
   );
 }
 
+type ProblemStatus =
+  | "FirstAccepted"
+  | "Accepted"
+  | "Resolving"
+  | "Pending"
+  | "WrongAnswer"
+  | "NoAttempted";
+
 function MyProblemBox({
-  index,
-  width,
+  problemWidth,
   problemStatus,
   displayText,
 }: {
-  index: string;
-  width: string;
-  problemStatus: string;
+  problemWidth: number;
+  problemStatus: ProblemStatus;
   displayText: string;
 }) {
   return (
-    <span className={`problemBox problemBox-${problemStatus}`} style={{ width }} key={index}>
+    <span
+      className={classNames("problemBox", {
+        "problemBox-FirstAccepted": problemStatus === "FirstAccepted",
+        "problemBox-Accepted": problemStatus === "Accepted",
+        "problemBox-Resolving": problemStatus === "Resolving",
+        "problemBox-Pending": problemStatus === "Pending",
+        "problemBox-WrongAnswer": problemStatus === "WrongAnswer",
+        "problemBox-NoAttempted": problemStatus === "NoAttempted",
+      })}
+      style={{ width: `${problemWidth}%` }}
+    >
       {displayText}
     </span>
   );
@@ -129,10 +145,10 @@ function MyTableRow({ team, isNext, index }: { team: TeamType; isNext: boolean; 
     <Flipped flipId={team.id}>
       <div
         className={classNames("tableRow", {
-          scoreboardTableBlackRow: index % 2 !== 0 && !isNext && !team.moved,
-          scoreboardTableGrayRow: index % 2 === 0 && !isNext && !team.moved,
+          scoreboardTableBlackRow: index % 2 !== 0 && !isNext && !team.movedUp,
+          scoreboardTableGrayRow: index % 2 === 0 && !isNext && !team.movedUp,
           "tableRow-Selected": isNext,
-          "tableRow-MovedUp": team.moved,
+          "tableRow-MovedUp": team.movedUp,
         })}
         id={team.id.toString()}
       >
@@ -147,12 +163,8 @@ function MyTableRow({ team, isNext, index }: { team: TeamType; isNext: boolean; 
           {/*Problem Boxes*/}
           <div className="tableRox-Problems">
             {team.problems.map((problem, i) => {
-              let problemStatus = "NoAttempted";
-              // Can be "FirstAccepted" | "Accepted" | "Resolving" | "Pending" | "WrongAnswer" | "NoAttempted"
-
-              let problemIndex = problem.indexLetter;
-              //   let sizeProblem = 84.0 / team.problems.length;
-              let widthPercentage = `${84.0 / team.problems.length}%`;
+              let problemStatus = "NoAttempted" as ProblemStatus;
+              let problemWidth = 84.0 / team.problems.length;
               let textToShowInProblem = problem.indexLetter;
 
               if (problem.isFirstSolved) {
@@ -162,19 +174,13 @@ function MyTableRow({ team, isNext, index }: { team: TeamType; isNext: boolean; 
               } else if (problem.isFrozen) {
                 problemStatus = "Resolving";
                 textToShowInProblem = `${problem.tries} - ${problem.nextSubmissionTime}`;
-              } else if (problem.tries < 0) {
-                // TODO: Here would be both the check and the problemStatus when the problem is partially solved
-                // problemStatus = "Partial";
-                // textToShowInProblem = `${problem.score} - ${problem.nextSubmissionTime}`;
               } else if (problem.tries > 0) {
                 problemStatus = "WrongAnswer";
                 textToShowInProblem = `${problem.tries} - ${problem.penalty}`;
               }
               return (
                 <MyProblemBox
-                  key={problemIndex}
-                  index={problemIndex}
-                  width={widthPercentage}
+                  problemWidth={problemWidth}
                   problemStatus={problemStatus}
                   displayText={textToShowInProblem}
                 />

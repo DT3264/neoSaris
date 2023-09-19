@@ -28,7 +28,9 @@ export type TeamType = {
   // teams with no frozen submission would be skipped
   // and that would look clunky
   isDone: boolean;
-  moved: boolean;
+  movedUp: boolean;
+  // If a team had an AC in the last submission, it means that
+  hadAC: boolean;
 };
 
 type ScoreboardType = {
@@ -78,7 +80,8 @@ function getNewTeam(contestData: ContestData, contestantName: string) {
     solvedCount: 0,
     totalPenalty: 0,
     isDone: false,
-    moved: false,
+    movedUp: false,
+    hadAC: false,
   } as TeamType;
 }
 
@@ -166,6 +169,7 @@ function processSubmissionAfterFreeze(
     team.frozenSubmissions = team.frozenSubmissions.filter(
       s => s.problemIndex !== submission.problemIndex
     );
+    team.hadAC = true;
   }
   // Get next submission's time for that problem
   const currentProblem = team.problems.find(p => p.indexLetter === submission.problemIndex)!;
@@ -206,9 +210,8 @@ function getScoreboardSortedTeams(teams: TeamType[], isInitialSort: boolean) {
     return a.totalPenalty - b.totalPenalty;
   });
   sortedTeams[0].position = 1;
-  // This is to detect if a team has been moved,
-  // if so, that's the team that moved up in the scoreboard
-  let alreadySwitched = false;
+  // This is to detect if the scoreboard moved
+  let scoreboardMoved = false;
   for (let i = 1; i < sortedTeams.length; i++) {
     const currentPosition = sortedTeams[i].position;
     const isTied =
@@ -220,13 +223,14 @@ function getScoreboardSortedTeams(teams: TeamType[], isInitialSort: boolean) {
       sortedTeams[i].position = i + 1;
     }
     if (!isInitialSort) {
-      if (sortedTeams[i].position !== currentPosition && !alreadySwitched) {
-        sortedTeams[i].moved = true;
-        alreadySwitched = true;
-      } else {
-        sortedTeams[i].moved = false;
+      if (sortedTeams[i].position !== currentPosition) {
+        scoreboardMoved = true;
       }
     }
+    teams[i].movedUp = false;
+  }
+  if (scoreboardMoved) {
+    teams.forEach(t => (t.movedUp = t.hadAC));
   }
   return sortedTeams;
 }
@@ -313,7 +317,7 @@ export function getInitialData(contestData: ContestData) {
 }
 
 export function getNextData(scoreboardDirector: ScoreboardDirectorType) {
-  const movedTeam = scoreboardDirector.teams.find(t => t.moved);
+  const movedTeam = scoreboardDirector.teams.find(t => t.movedUp);
   console.log("MovedTeam:", movedTeam);
   //   if (movedTeam !== undefined) {
   //     movedTeam.moved = false;
@@ -328,6 +332,7 @@ export function getNextData(scoreboardDirector: ScoreboardDirectorType) {
   //   const team = scoreboardDirector.teams[scoreboardDirector.indexOfNext];
 
   // Process submission of the team indicated in indexOfNext
+  scoreboardDirector.teams.forEach(t => (t.hadAC = false));
   processTeamsNextFrozenSubmission(team, scoreboardDirector.scoreboard);
 
   // After processing the submission, sort the teams
