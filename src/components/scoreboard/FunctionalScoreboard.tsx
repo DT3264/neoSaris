@@ -93,7 +93,7 @@ export default function FunctionalScoreboard({ contestData }: { contestData: Con
               {scoreboardDirector.teams.map((t, i) => (
                 <MyTableRow
                   team={t}
-                  isNext={i == indexOfNext.current && !hasAnyTeamMoved}
+                  isNextTeam={i == indexOfNext.current && !hasAnyTeamMoved}
                   index={i}
                   key={t.id}
                 />
@@ -118,10 +118,12 @@ function MyProblemBox({
   problemWidth,
   problemStatus,
   displayText,
+  isNextProblem,
 }: {
   problemWidth: number;
   problemStatus: ProblemStatus;
   displayText: string;
+  isNextProblem: boolean;
 }) {
   return (
     <span
@@ -132,6 +134,7 @@ function MyProblemBox({
         "problemBox-Pending": problemStatus === "Pending",
         "problemBox-WrongAnswer": problemStatus === "WrongAnswer",
         "problemBox-NoAttempted": problemStatus === "NoAttempted",
+        "problemBox-Bordered": isNextProblem,
       })}
       style={{ width: `${problemWidth}%` }}
     >
@@ -140,14 +143,24 @@ function MyProblemBox({
   );
 }
 
-function MyTableRow({ team, isNext, index }: { team: TeamType; isNext: boolean; index: number }) {
+function MyTableRow({
+  team,
+  isNextTeam,
+  index,
+}: {
+  team: TeamType;
+  isNextTeam: boolean;
+  index: number;
+}) {
+  const nextProblemIndex =
+    team.frozenSubmissions.length > 0 ? team.frozenSubmissions[0].problemIndex : "";
   return (
     <Flipped flipId={team.id}>
       <div
         className={classNames("tableRow", {
-          scoreboardTableBlackRow: index % 2 !== 0 && !isNext && !team.movedUp,
-          scoreboardTableGrayRow: index % 2 === 0 && !isNext && !team.movedUp,
-          "tableRow-Selected": isNext,
+          scoreboardTableBlackRow: index % 2 !== 0 && !isNextTeam && !team.movedUp,
+          scoreboardTableGrayRow: index % 2 === 0 && !isNextTeam && !team.movedUp,
+          scoreboardTableSelectedRow: isNextTeam,
           "tableRow-MovedUp": team.movedUp,
         })}
         id={team.id.toString()}
@@ -162,7 +175,7 @@ function MyTableRow({ team, isNext, index }: { team: TeamType; isNext: boolean; 
           <span className="tableRox-ContestantName">{team.name}</span>
           {/*Problem Boxes*/}
           <div className="tableRox-Problems">
-            {team.problems.map((problem, i) => {
+            {team.problems.map(problem => {
               let problemStatus = "NoAttempted" as ProblemStatus;
               let problemWidth = 84.0 / team.problems.length;
               let textToShowInProblem = problem.indexLetter;
@@ -180,9 +193,11 @@ function MyTableRow({ team, isNext, index }: { team: TeamType; isNext: boolean; 
               }
               return (
                 <MyProblemBox
+                  key={problem.indexLetter}
                   problemWidth={problemWidth}
                   problemStatus={problemStatus}
                   displayText={textToShowInProblem}
+                  isNextProblem={problem.indexLetter === nextProblemIndex && isNextTeam}
                 />
               );
             })}
