@@ -16,6 +16,8 @@ import { ProblemColumn } from "../../types/scoreboardDataTypes";
 
 import "./TableRow.css";
 import "./ProblemBox.css";
+import "./Scoreboard.css";
+import classNames from "classnames";
 
 export default function FunctionalScoreboard({ contestData }: { contestData: ContestData }) {
   const [scoreboardDirector, setScoreboardDirector] = useState(getInitialData(contestData));
@@ -133,22 +135,17 @@ function MyTableRow({
   problems: Problem[];
   index: number;
 }) {
-  let classNameForThisRow = "";
-  if (isNext) {
-    classNameForThisRow += " tableRow-Selected";
-  }
-  if (movedUp) {
-    classNameForThisRow += " tableRow-MovedUp";
-  }
-  let classNameForEachRow = "scoreboardTableGrayRow";
-  if (isNext) {
-    classNameForEachRow += classNameForThisRow;
-  } else if (index % 2 !== 0) {
-    classNameForEachRow = "scoreboardTableBlackRow";
-  }
   return (
     <Flipped flipId={team.id}>
-      <div className={"tableRow " + classNameForEachRow} id={team.id.toString()}>
+      <div
+        className={classNames("tableRow", {
+          scoreboardTableBlackRow: index % 2 !== 0 && !isNext && !movedUp,
+          scoreboardTableGrayRow: index % 2 === 0 && !isNext && !movedUp,
+          "tableRow-Selected": isNext,
+          "tableRow-MovedUp": movedUp,
+        })}
+        id={team.id.toString()}
+      >
         {/*Rank*/}
         <span className="tableRow-Rank">{team.position}</span>
         {/*Photo*/}
@@ -163,16 +160,15 @@ function MyTableRow({
               let problemStatus = "NoAttempted";
               // Can be "FirstAccepted" | "Accepted" | "Resolving" | "Pending" | "WrongAnswer" | "NoAttempted"
 
-              let problemIndex = problems[i].index;
-              let sizeProblem = 84.0 / team.problems.length;
-              let widthPercentage = sizeProblem + "%";
-              let textToShowInProblem = problems[i].index;
+              let problemIndex = problem.indexLetter;
+              //   let sizeProblem = 84.0 / team.problems.length;
+              let widthPercentage = `${84.0 / team.problems.length}%`;
+              let textToShowInProblem = problem.indexLetter;
 
-              if (problem.isSolved) {
+              if (problem.isFirstSolved) {
+                problemStatus = "FirstAccepted";
+              } else if (problem.isSolved) {
                 problemStatus = "Accepted";
-                if (problem.isFirstSolved) {
-                  problemStatus = "FirstAccepted";
-                }
               } else if (problem.isFrozen) {
                 problemStatus = "Resolving";
                 textToShowInProblem = `${problem.tries} - ${problem.nextSubmissionTime}`;

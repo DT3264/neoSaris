@@ -1,16 +1,16 @@
-.scoreboardTable {
+/* .scoreboardTable {
   height: 100vh;
   display: flex;
   flex-direction: column;
   overflow-y: hidden;
-}
+} */
 
-.score-FlipMove {
+/* .score-FlipMove {
   order: 1;
   position: relative;
   height: auto;
   overflow-y: scroll;
-}
+} */
 
 .scoreboardTableProblemRowFirstChild > :first-child {
   margin-left: 4.3%;
@@ -23,11 +23,11 @@
 .scoreboardTableBlackRow {
   background-color: #0e0e0f;
 }
-
+/*
 .scoreboardTableSelectedRow {
   background-color: #2873ed;
 }
 
 .scoreboardTableSelectedRowFinished {
   background-color: #255eba;
-}
+} */
