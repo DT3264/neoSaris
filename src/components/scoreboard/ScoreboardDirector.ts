@@ -317,13 +317,6 @@ export function getInitialData(contestData: ContestData) {
 }
 
 export function getNextData(scoreboardDirector: ScoreboardDirectorType) {
-  const movedTeam = scoreboardDirector.teams.find(t => t.movedUp);
-  console.log("MovedTeam:", movedTeam);
-  //   if (movedTeam !== undefined) {
-  //     movedTeam.moved = false;
-  //     return scoreboardDirector;
-  //   }
-
   const team = scoreboardDirector.teams.findLast(t => !t.isDone);
   if (team === undefined) {
     return scoreboardDirector;

@@ -1,264 +1,89 @@
-import React, { Component } from "react";
 import ProblemBox from "./ProblemBox";
 import "./TableRow.css";
 
-import defaultImage from "../../assets/university_logos/default.png";
 import cecyt13 from "../../assets/university_logos/cecyt13.png";
 import chapingo from "../../assets/university_logos/chapingo.png";
+import defaultImage from "../../assets/university_logos/default.png";
 import escom from "../../assets/university_logos/escom.png";
 import itcg from "../../assets/university_logos/itcg.png";
 import uam from "../../assets/university_logos/uam.png";
 import ug from "../../assets/university_logos/ug.png";
 import umsa from "../../assets/university_logos/umsa.png";
-import { ProblemColumn, Team } from "../../types/scoreboardDataTypes";
-import { Problem, Submission } from "../../types/contestDataTypes";
+import { TeamType } from "./ScoreboardDirector";
+import { Flipped } from "react-flip-toolkit";
+import classNames from "classnames";
+import { ProblemStatusType } from "../../types/scoreboardDataTypes";
 
 const images = { cecyt13, chapingo, escom, itcg, uam, ug, umsa };
-
-interface IProps {
+export default function TableRow({
+  team,
+  isNextTeam,
+  index,
+}: {
+  team: TeamType;
+  isNextTeam: boolean;
   index: number;
-  team: Team;
-  numberOfProblems: number;
-  problems: Array<Problem>;
-  submissionWhenFrozen: Array<Submission>;
-  currentFrozenSubmission: Submission | null;
-  savedCurrentFrozenSubmission: Submission | null;
-  classNameForThisRow: string;
-}
-
-interface IState {}
-
-class TableRow extends Component<IProps, IState> {
-  getImageForTeam(url) {
-    return images[url] ?? defaultImage;
-  }
-
-  numberOfTriesOnAcceptedProblem(problemLetter) {
-    let team = this.props.team;
-    return problemLetter;
-    // for (let i = 0; i < this.props.numberOfProblems; i++) {
-    //   if (this.props.problems[i].index === problemLetter) {
-    //     return team.triesOnProblems[i] + 1 + " - " + team.penaltyOnProblem[i];
-    //   }
-    // }
-    // return problemLetter;
-  }
-
-  numberOfTriesOnTriedProblem(problemLetter) {
-    let team = this.props.team;
-    for (let i = 0; i < this.props.numberOfProblems; i++) {
-      if (this.props.problems[i].index === problemLetter) {
-        return team.triesOnProblems[i] + " - " + team.penaltyOnProblem[i];
-      }
-    }
-    return problemLetter;
-  }
-
-  numberOfTriesOnFrozenProblem(problemLetter) {
-    let team = this.props.team;
-    let submissionWhenFrozen = this.props.submissionWhenFrozen;
-    if (
-      submissionWhenFrozen === undefined ||
-      submissionWhenFrozen === null ||
-      submissionWhenFrozen.length === 0
-    ) {
-      return problemLetter;
-    }
-    for (let i = 0; i < this.props.numberOfProblems; i++) {
-      if (this.props.problems[i].index === problemLetter) {
-        if (team.isProblemSolved[i] !== 0) {
-          return problemLetter;
-        }
-        for (let j = 0; j < submissionWhenFrozen.length; j++) {
-          if (
-            submissionWhenFrozen[j].contestantName === team.name &&
-            submissionWhenFrozen[j].problemIndex === problemLetter
-          ) {
-            return team.triesOnProblems[i] + 1 + " - " + submissionWhenFrozen[j].timeSubmitted;
-          }
-        }
-      }
-    }
-    return problemLetter;
-  }
-
-  hasSolvedProblem(problemLetter) {
-    let team = this.props.team;
-    for (let i = 0; i < this.props.numberOfProblems; i++) {
-      if (this.props.problems[i].index === problemLetter) {
-        if (team.isProblemSolved[i] === 0) {
-          return false;
-        } else {
-          return true;
-        }
-      }
-    }
-    return false;
-  }
-
-  hasTriedProblem(problemLetter) {
-    let team = this.props.team;
-    for (let i = 0; i < this.props.numberOfProblems; i++) {
-      if (this.props.problems[i].index === problemLetter) {
-        if (team.triesOnProblems[i] !== 0) {
-          return true;
-        } else {
-          return false;
-        }
-      }
-    }
-    return false;
-  }
-
-  isFirstToSolve(problemLetter) {
-    let team = this.props.team;
-    for (let i = 0; i < this.props.numberOfProblems; i++) {
-      if (this.props.problems[i].index === problemLetter) {
-        if (team.isFirstToSolve[i] !== 0) {
-          return true;
-        } else {
-          return false;
-        }
-      }
-    }
-    return false;
-  }
-
-  isAPendingProblem(problemLetter) {
-    let team = this.props.team;
-    let submissionWhenFrozen = this.props.submissionWhenFrozen;
-    if (submissionWhenFrozen === undefined || submissionWhenFrozen.length === 0) {
-      return false;
-    }
-    for (let i = 0; i < this.props.numberOfProblems; i++) {
-      if (this.props.problems[i].index === problemLetter) {
-        if (team.isProblemSolved[i] !== 0) {
-          return false;
-        }
-        for (let j = 0; j < submissionWhenFrozen.length; j++) {
-          if (
-            submissionWhenFrozen[j].contestantName === team.name &&
-            submissionWhenFrozen[j].problemIndex === problemLetter
-          ) {
-            return true;
-          }
-        }
-      }
-    }
-    return false;
-  }
-
-  isAPendingProblemOnThisRow(problemLetter) {
-    let team = this.props.team;
-    let savedCurrentFrozenSubmission = this.props.savedCurrentFrozenSubmission;
-    if (savedCurrentFrozenSubmission === null) {
-      return false;
-    }
-    for (let i = 0; i < this.props.numberOfProblems; i++) {
-      if (this.props.problems[i].index === problemLetter) {
-        if (team.isProblemSolved[i] !== 0) {
-          return false;
-        }
-        if (
-          savedCurrentFrozenSubmission.contestantName === team.name &&
-          savedCurrentFrozenSubmission.problemIndex === problemLetter
-        ) {
-          return true;
-        }
-      }
-    }
-    return false;
-  }
-
-  isACurrentFrozenProblem(problemLetter) {
-    if (this.props.currentFrozenSubmission === null) {
-      return false;
-    }
-    if (
-      this.props.currentFrozenSubmission.contestantName === this.props.team.name &&
-      problemLetter === this.props.currentFrozenSubmission.problemIndex
-    ) {
-      return true;
-    }
-    return false;
-  }
-
-  thisRowShhouldBeSelected(problems) {
-    return (
-      this.props.classNameForThisRow !== null &&
-      this.props.classNameForThisRow !== undefined &&
-      this.props.classNameForThisRow.length !== 0
-    );
-  }
-
-  render() {
-    let problems = this.props.problems;
-
-    let sizeProblem = 84.0 / this.props.numberOfProblems;
-    let widthPercentage = sizeProblem + "%";
-
-    let problemColumns: Array<ProblemColumn> = problems.map(problem => {
-      let verdict = "NoAttempted";
-      let textToShowInProblem = problem.index;
-
-      if (this.hasSolvedProblem(problem.index) === true) {
-        if (this.isFirstToSolve(problem.index) === true) {
-          verdict = "FirstAccepted";
-        } else {
-          verdict = "Accepted";
-        }
-        textToShowInProblem = this.numberOfTriesOnAcceptedProblem(problem.index);
-      } else if (this.isACurrentFrozenProblem(problem.index) === true) {
-        verdict = "Resolving";
-        textToShowInProblem = this.numberOfTriesOnFrozenProblem(problem.index);
-      } else if (this.isAPendingProblem(problem.index) === true) {
-        verdict = "Pending";
-        textToShowInProblem = this.numberOfTriesOnFrozenProblem(problem.index);
-      } else if (this.hasTriedProblem(problem.index) === true) {
-        verdict = "WrongAnswer";
-        textToShowInProblem = this.numberOfTriesOnTriedProblem(problem.index);
-      }
-
-      return {
-        key: problem.index,
-        index: problem.index,
-        width: widthPercentage,
-        problemStatus: verdict,
-        displayText: textToShowInProblem,
-      };
-    }) as ProblemColumn[];
-
-    let classNameForEachRow = "scoreboardTableGrayRow";
-    if (this.thisRowShhouldBeSelected(problems) === true) {
-      classNameForEachRow += this.props.classNameForThisRow;
-    } else if (this.props.index % 2 !== 0) {
-      classNameForEachRow = "scoreboardTableBlackRow";
-    }
-
-    return (
-      <div className={"tableRow " + classNameForEachRow} id={this.props.team.id}>
+}) {
+  const nextProblemIndex =
+    team.frozenSubmissions.length > 0 ? team.frozenSubmissions[0].problemIndex : "";
+  return (
+    <Flipped flipId={team.id}>
+      <div
+        className={classNames("tableRow", {
+          scoreboardTableBlackRow: index % 2 !== 0 && !isNextTeam && !team.movedUp,
+          scoreboardTableGrayRow: index % 2 === 0 && !isNextTeam && !team.movedUp,
+          scoreboardTableSelectedRow: isNextTeam,
+          "tableRow-MovedUp": team.movedUp,
+        })}
+        id={team.id.toString()}
+      >
         {/*Rank*/}
-        <span className="tableRow-Rank">{this.props.team.position}</span>
+        <span className="tableRow-Rank">{team.position}</span>
         {/*Photo*/}
-        <img className="tableRow-Picture" src={this.getImageForTeam(this.props.team.id)} alt="" />
+        <img className="tableRow-Picture" src={defaultImage} alt="" />
         {/*Name+Problems*/}
         <div className="tableRow-TeamData">
           {/*ContestantName*/}
-          <span className="tableRox-ContestantName">{this.props.team.name}</span>
+          <span className="tableRox-ContestantName">{team.name}</span>
           {/*Problem Boxes*/}
           <div className="tableRox-Problems">
-            {problemColumns.map(problemData => {
-              return <ProblemBox {...problemData} />;
+            {team.problems.map(problem => {
+              let problemStatus = "NoAttempted" as ProblemStatusType;
+              let problemWidth = 84.0 / team.problems.length;
+              let textToShowInProblem = problem.indexLetter;
+
+              if (problem.isFirstSolved) {
+                problemStatus = "FirstAccepted";
+              } else if (problem.isSolved) {
+                problemStatus = "Accepted";
+              } else if (problem.isFrozen) {
+                problemStatus = "Resolving";
+                textToShowInProblem = `${problem.tries} - ${problem.nextSubmissionTime}`;
+              } else if (problem.tries > 0) {
+                problemStatus = "WrongAnswer";
+                textToShowInProblem = `${problem.tries} - ${problem.penalty}`;
+              }
+              // Is next problem only if
+              // the team's next submision index is equal to this problem's index
+              // and if the current team is the next team to be shown
+              const isNextProblem = problem.indexLetter === nextProblemIndex && isNextTeam;
+              return (
+                <ProblemBox
+                  key={problem.indexLetter}
+                  problemWidth={problemWidth}
+                  problemStatus={problemStatus}
+                  displayText={textToShowInProblem}
+                  isNextProblem={isNextProblem}
+                />
+              );
             })}
           </div>
         </div>
         {/*ProblemsSolved*/}
-        <span className="tableRow-ResolvedProblems">{this.props.team.solved}</span>
+        <span className="tableRow-ResolvedProblems">{team.solvedCount}</span>
         {/*Penalty*/}
-        <span className="tableRow-Penalty">{this.props.team.penalty}</span>
+        <span className="tableRow-Penalty">{team.totalPenalty}</span>
       </div>
-    );
-  }
+    </Flipped>
+  );
 }
-
-export default TableRow;

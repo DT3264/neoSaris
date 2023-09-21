@@ -23,3 +23,11 @@ export type ProblemColumn = {
     | "NoAttempted";
   displayText: string;
 };
+
+export type ProblemStatusType =
+  | "FirstAccepted"
+  | "Accepted"
+  | "Resolving"
+  | "Pending"
+  | "WrongAnswer"
+  | "NoAttempted";
