@@ -1,56 +1,10 @@
 import { ContestData, Problem, Submission, Verdict } from "../../types/contestDataTypes";
-
-// Every piece of this type is useful because with a forEach on the problem you can get
-// the sum of scores (the amount of problems solved if ICPC)
-// The sum of penalties
-// The tries in that problem,
-type ProblemType = {
-  tries: number;
-  score: number; // if 0, not solved, if 1, solved, useful like this because it can also represent partial scores
-  penalty: number;
-  isSolved: boolean;
-  isFirstSolved: boolean;
-  isFrozen: boolean;
-  indexLetter: string;
-  nextSubmissionTime: number;
-};
-
-export type TeamType = {
-  unfrozenSubmissions: Submission[];
-  frozenSubmissions: Submission[];
-  position: number;
-  name: string;
-  id: number;
-  problems: ProblemType[];
-  solvedCount: number;
-  totalPenalty: number;
-  // Required because if we only check frozenSubmissions,
-  // teams with no frozen submission would be skipped
-  // and that would look clunky
-  isDone: boolean;
-  movedUp: boolean;
-  // If a team had an AC in the last submission, it means that
-  hadAC: boolean;
-};
-
-type ScoreboardType = {
-  isProblemAlreadySolved: number[];
-  // contestMetadata: contestData.contestMetadata,
-  verdicts: Verdict;
-  problems: Problem[];
-  contestDuration: number;
-  contestFrozenTimeDuration: number;
-  contestTimeOfFreeze: number;
-  contestName: string;
-  contestType: string;
-  firstSolvedArray: string[];
-};
-
-export type ScoreboardDirectorType = {
-  teams: TeamType[];
-  scoreboard: ScoreboardType;
-  indexOfNext: number;
-};
+import {
+  ProblemType,
+  ScoreboardDirectorType,
+  ScoreboardType,
+  TeamType,
+} from "../../types/scoreboardDataTypes";
 
 function isSubmissionBeforeFrozen(submission: Submission, frozenTime: number) {
   return submission.timeSubmitted < frozenTime;
@@ -77,7 +31,7 @@ function getNewTeam(contestData: ContestData, contestantName: string) {
     name: contestantName,
     id: contestantId ?? -1,
     problems: problems,
-    solvedCount: 0,
+    totalScore: 0,
     totalPenalty: 0,
     isDone: false,
     movedUp: false,
@@ -136,7 +90,7 @@ function processSubmission(submission: Submission, team: TeamType, scoreboard: S
       problem.score = 1;
       problem.penalty = submission.timeSubmitted + problem.tries * 20;
       team.totalPenalty = team.problems.reduce((acc, p) => acc + p.penalty, 0);
-      team.solvedCount++;
+      team.totalScore = team.problems.reduce((acc, p) => acc + p.score, 0);
       if (scoreboard.firstSolvedArray[problemIndex] === submission.contestantName) {
         problem.isFirstSolved = true;
         scoreboard.isProblemAlreadySolved[problemIndex] = 1;
@@ -204,8 +158,8 @@ function getFirstSolvedOnEachProblem(submissions: Submission[], contestData: Con
 // Sort teams by solvedCount, penalty, and firstToSolveIndex
 function getScoreboardSortedTeams(teams: TeamType[], isInitialSort: boolean) {
   const sortedTeams = teams.sort((a, b) => {
-    if (a.solvedCount !== b.solvedCount) {
-      return b.solvedCount - a.solvedCount;
+    if (a.totalScore !== b.totalScore) {
+      return b.totalScore - a.totalScore;
     }
     return a.totalPenalty - b.totalPenalty;
   });
@@ -215,7 +169,7 @@ function getScoreboardSortedTeams(teams: TeamType[], isInitialSort: boolean) {
   for (let i = 1; i < sortedTeams.length; i++) {
     const currentPosition = sortedTeams[i].position;
     const isTied =
-      sortedTeams[i].solvedCount === sortedTeams[i - 1].solvedCount &&
+      sortedTeams[i].totalScore === sortedTeams[i - 1].totalScore &&
       sortedTeams[i].totalPenalty === sortedTeams[i - 1].totalPenalty;
     if (isTied) {
       sortedTeams[i].position = sortedTeams[i - 1].position;
@@ -312,31 +266,43 @@ export function getInitialData(contestData: ContestData) {
   return {
     teams: getScoreboardSortedTeams(teams, true),
     scoreboard: scoreboardData,
-    indexOfNext: teams.length - 1,
+    indexOfNextTeam: teams.length - 1,
   } as ScoreboardDirectorType;
 }
 
-export function getNextData(scoreboardDirector: ScoreboardDirectorType) {
-  const team = scoreboardDirector.teams.findLast(t => !t.isDone);
-  if (team === undefined) {
-    return scoreboardDirector;
-  }
-  // Get the team that is next to process indicated by indexOfNext
-  //   const team = scoreboardDirector.teams[scoreboardDirector.indexOfNext];
-
-  // Process submission of the team indicated in indexOfNext
-  scoreboardDirector.teams.forEach(t => (t.hadAC = false));
-  processTeamsNextFrozenSubmission(team, scoreboardDirector.scoreboard);
-
+function prepareReturnData(scoreboardDirector: ScoreboardDirectorType) {
   // After processing the submission, sort the teams
   scoreboardDirector.teams = getScoreboardSortedTeams(scoreboardDirector.teams, false);
 
   // Index of next is the index of the last team that is not done
-  scoreboardDirector.indexOfNext = scoreboardDirector.teams.findLastIndex(t => !t.isDone);
+  scoreboardDirector.indexOfNextTeam = scoreboardDirector.teams.findLastIndex(t => !t.isDone);
+}
 
+export function getNextData(scoreboardDirector: ScoreboardDirectorType) {
+  // If all teams are done, return the same data
+  const team = scoreboardDirector.teams.findLast(t => !t.isDone);
+  if (team === undefined) {
+    return scoreboardDirector;
+  }
+
+  // If there is a team with an AC, return the same data
+  // because otherwise it could skip a team if it has no frozen submissions
+  const teamWithAC = scoreboardDirector.teams.find(t => t.hadAC);
+  if (teamWithAC !== undefined) {
+    teamWithAC.hadAC = false;
+    prepareReturnData(scoreboardDirector);
+    return scoreboardDirector;
+  }
+
+  processTeamsNextFrozenSubmission(team, scoreboardDirector.scoreboard);
+  prepareReturnData(scoreboardDirector);
   return scoreboardDirector;
 }
 
-function getDataBeforeNthPlace(nthPlace: number) {
+export function getDataUpToNthPlace(scoreboardDirector: ScoreboardDirectorType, nthPlace: number) {
   // TODO: Get data while indexOfNext < nthPlace
+  while (scoreboardDirector.indexOfNextTeam >= nthPlace) {
+    scoreboardDirector = getNextData(scoreboardDirector);
+  }
+  return scoreboardDirector;
 }

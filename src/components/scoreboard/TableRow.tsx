@@ -9,10 +9,9 @@ import itcg from "../../assets/university_logos/itcg.png";
 import uam from "../../assets/university_logos/uam.png";
 import ug from "../../assets/university_logos/ug.png";
 import umsa from "../../assets/university_logos/umsa.png";
-import { TeamType } from "./ScoreboardDirector";
 import { Flipped } from "react-flip-toolkit";
 import classNames from "classnames";
-import { ProblemStatusType } from "../../types/scoreboardDataTypes";
+import { ProblemStatusType, TeamType } from "../../types/scoreboardDataTypes";
 
 const images = { cecyt13, chapingo, escom, itcg, uam, ug, umsa };
 export default function TableRow({
@@ -80,7 +79,7 @@ export default function TableRow({
           </div>
         </div>
         {/*ProblemsSolved*/}
-        <span className="tableRow-ResolvedProblems">{team.solvedCount}</span>
+        <span className="tableRow-ResolvedProblems">{team.totalScore}</span>
         {/*Penalty*/}
         <span className="tableRow-Penalty">{team.totalPenalty}</span>
       </div>

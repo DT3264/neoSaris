@@ -1,13 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
 import { ContestData } from "../../types/contestDataTypes";
-// import Scoreboard from "./Scoreboard";
 
 import { Flipper } from "react-flip-toolkit";
 import Header from "./Header";
-import { ScoreboardDirectorType, getInitialData, getNextData } from "./ScoreboardDirector";
+import { getDataUpToNthPlace, getInitialData, getNextData } from "./ScoreboardDirector";
 import TableRow from "./TableRow";
 import "./Scoreboard.css";
+import { ScoreboardDirectorType } from "../../types/scoreboardDataTypes";
 
 export default function Scoreboard({ contestData }: { contestData: ContestData }) {
   const [scoreboardDirector, setScoreboardDirector] = useState(getInitialData(contestData));
@@ -15,7 +15,7 @@ export default function Scoreboard({ contestData }: { contestData: ContestData }
 
   const containerRef = useRef<HTMLDivElement | null>(null); // Reference to the container
 
-  const indexOfNext = useRef(scoreboardDirector.teams.length - 1);
+  const indexOfNextTeam = useRef(scoreboardDirector.teams.length - 1);
 
   const scrollToIndex = (index: number) => {
     containerRef.current?.children[index].scrollIntoView({
@@ -25,55 +25,38 @@ export default function Scoreboard({ contestData }: { contestData: ContestData }
     });
   };
 
-  const getIndexOfNext = () => scoreboardDirector.teams.findLastIndex(t => !t.isDone);
+  const getindexOfNextTeam = () => scoreboardDirector.teams.findLastIndex(t => !t.isDone);
 
-  const scrollToNext = () => {
-    const indexOfNext = getIndexOfNext();
-    if (indexOfNext === -1) scrollToIndex(0);
-    else scrollToIndex(indexOfNext);
+  const scrollToNextTeam = () => {
+    const indexOfNextTeam = getindexOfNextTeam();
+    if (indexOfNextTeam === -1) scrollToIndex(0);
+    else scrollToIndex(indexOfNextTeam);
   };
 
-  useEffect(() => scrollToNext(), []);
+  useEffect(() => {
+    setTimeout(() => {
+      scrollToIndex(scoreboardDirector.teams.length - 1);
+    }, 100);
+  }, []);
+  useEffect(() => scrollToNextTeam(), [scoreboardDirector, reloadId]);
 
   const updateScoreboard = (newData: ScoreboardDirectorType) => {
-    indexOfNext.current = newData.indexOfNext;
+    indexOfNextTeam.current = newData.indexOfNextTeam;
     setScoreboardDirector(newData);
     setReloadId(prevReloadId => prevReloadId + 1);
-    scrollToIndex(newData.indexOfNext !== -1 ? newData.indexOfNext : 0);
   };
   const onNextSubmission = () => {
-    if (indexOfNext.current === -1) return;
+    if (indexOfNextTeam.current === -1) return;
     const newData = getNextData(scoreboardDirector);
     updateScoreboard(newData);
   };
 
-  const nextSubmission = () => {
-    // scoreboardRef.current?.keyNextSubmission();
-    onNextSubmission();
-  };
-  const top10Standing = () => {
-    // scoreboardRef.current?.revealUntilTop(10);
-    let currentDirector = scoreboardDirector;
-    while (currentDirector.indexOfNext >= 10) {
-      currentDirector = getNextData(currentDirector);
-    }
-    updateScoreboard(currentDirector);
-  };
-  const unfreeze = () => {
-    // scoreboardRef.current?.revealUntilTop(0);
-    let currentDirector = scoreboardDirector;
-    while (currentDirector.indexOfNext >= 0) {
-      currentDirector = getNextData(currentDirector);
-    }
-    updateScoreboard(currentDirector);
-    scrollToIndex(0);
-  };
-  //   //(N)ext submission
-  useHotkeys("n", nextSubmission);
+  //(N)ext submission
+  useHotkeys("n", () => onNextSubmission());
   //(T)op 10 Standing
-  useHotkeys("t", top10Standing);
+  useHotkeys("t", () => updateScoreboard(getDataUpToNthPlace(scoreboardDirector, 10)));
   //(U)nfroze Standing
-  useHotkeys("u", unfreeze);
+  useHotkeys("u", () => updateScoreboard(getDataUpToNthPlace(scoreboardDirector, 0)));
 
   const hasAnyTeamMoved = scoreboardDirector.teams.some(t => t.movedUp);
   return (
@@ -86,7 +69,7 @@ export default function Scoreboard({ contestData }: { contestData: ContestData }
               {scoreboardDirector.teams.map((t, i) => (
                 <TableRow
                   team={t}
-                  isNextTeam={i == indexOfNext.current && !hasAnyTeamMoved}
+                  isNextTeam={i == indexOfNextTeam.current && !hasAnyTeamMoved}
                   index={i}
                   key={t.id}
                 />
