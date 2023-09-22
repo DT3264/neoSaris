@@ -27,6 +27,7 @@ export default function TableRow({
 }) {
   const nextProblemIndex =
     team.frozenSubmissions.length > 0 ? team.frozenSubmissions[0].problemIndex : "";
+  const problemsWidth = 84.0 / team.problems.length;
   return (
     <Flipped flipId={team.id}>
       <div
@@ -50,7 +51,7 @@ export default function TableRow({
           <div className="tableRox-Problems">
             {team.problems.map(problem => {
               let problemStatus = "NoAttempted" as ProblemStatusType;
-              let problemWidth = 84.0 / team.problems.length;
+
               let textToShowInProblem = problem.indexLetter;
 
               if (problem.isFirstSolved) {
@@ -71,7 +72,7 @@ export default function TableRow({
               return (
                 <ProblemBox
                   key={problem.indexLetter}
-                  problemWidth={problemWidth}
+                  problemWidth={problemsWidth}
                   problemStatus={problemStatus}
                   displayText={textToShowInProblem}
                   isNextProblem={isNextProblem}
@@ -80,12 +81,24 @@ export default function TableRow({
             })}
           </div>
         </div>
-        {/*ProblemsSolved*/}
-        <span className="tableRow-ResolvedProblems">
-          {isScoreInteger ? team.totalScore.toFixed(0) : team.totalScore.toFixed(2)}
-        </span>
-        {/*Penalty*/}
-        <span className="tableRow-Penalty">{team.totalPenalty}</span>
+        {isScoreInteger && (
+          <>
+            {/*ProblemsSolved*/}
+            <span className="tableRow-ResolvedProblems">{team.totalScore.toFixed(0)}</span>
+            {/*Penalty*/}
+            <span className="tableRow-Penalty">{team.totalPenalty}</span>
+          </>
+        )}
+        {!isScoreInteger && (
+          <>
+            {/*ProblemsSolved*/}
+            <span className="tableRow-ResolvedProblems">
+              <div className="text-center">{team.totalScore.toFixed(2)}</div>
+              <span className="tableRow-Penalty text-center">{team.totalPenalty}</span>
+            </span>
+            {/*Penalty*/}
+          </>
+        )}
       </div>
     </Flipped>
   );
