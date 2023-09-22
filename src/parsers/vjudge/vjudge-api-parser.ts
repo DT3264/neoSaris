@@ -46,6 +46,8 @@ export const getContestData = async (frozenTime, contestId, numberOfProblems) =>
       frozenTimeDuration: frozenTime,
       name: response.title,
       type: "ICPC",
+      scoreMode: "absolute",
+      penaltyPerSubmission: 20,
     },
     problems: problems,
     contestants: Object.entries(response.participants).map((value: any, idx) => {
@@ -74,6 +76,7 @@ export const getContestDataWithVjudgeAPI = async (frozenTime, contestId, numberO
     }),
     verdicts: {
       accepted: ["ACCEPTED"],
+      partiallyAccepted: [],
       wrongAnswerWithPenalty: ["WRONG_ANSWER"],
       wrongAnswerWithoutPenalty: [],
     },

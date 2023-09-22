@@ -1,9 +1,12 @@
+export type ScoreModeType = "partial" | "absolute";
 export type ContestMetadata = {
   duration: number; //Duration in minutes
   frozenTimeDuration: number; //Duration of the frozen time in minutes
   name: string; // Title to display for the problem
   type: "ICPC"; // Type of contest to evaluate
   //^ We can add a future type for IOI to identify IOI contests
+  scoreMode: ScoreModeType; //If the contest has partial score or not
+  penaltyPerSubmission: number; //Penalty per problem
 };
 export type Problem = {
   //0 = first problem, etc.
@@ -21,6 +24,7 @@ export type Contestant = {
 export type Verdict = {
   accepted: Array<string>; //Name of the accepted verdicts
   //For IOI we can add partial verdict name
+  partiallyAccepted: Array<string>; //Name of the partially accepted verdicts
   wrongAnswerWithPenalty: Array<string>; //Name of WA verdicts that causes penalty
   wrongAnswerWithoutPenalty: Array<string>; //Name of of WA verdicts that does not causes penalty
 };
@@ -30,6 +34,8 @@ export type Submission = {
   problemIndex: string; //Should match problems array
   verdict: string; //Should match a registered verdict
   //For IOI we can add the partial scores
+  problemScore?: number; //Score of the problem (only available in contests w partial score, goes from 0 to 100)
+  penalty?: number; //Penalty of the problem (omegaup indicates penalty)
 };
 export type ContestData = {
   contestMetadata: ContestMetadata;

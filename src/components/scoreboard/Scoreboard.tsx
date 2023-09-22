@@ -72,6 +72,7 @@ export default function Scoreboard({ contestData }: { contestData: ContestData }
                   isNextTeam={i == indexOfNextTeam.current && !hasAnyTeamMoved}
                   index={i}
                   key={t.id}
+                  isScoreInteger={scoreboardDirector.scoreboard.scoreMode === "absolute"}
                 />
               ))}
             </div>

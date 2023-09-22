@@ -18,10 +18,12 @@ export default function TableRow({
   team,
   isNextTeam,
   index,
+  isScoreInteger,
 }: {
   team: TeamType;
   isNextTeam: boolean;
   index: number;
+  isScoreInteger: boolean;
 }) {
   const nextProblemIndex =
     team.frozenSubmissions.length > 0 ? team.frozenSubmissions[0].problemIndex : "";
@@ -79,7 +81,9 @@ export default function TableRow({
           </div>
         </div>
         {/*ProblemsSolved*/}
-        <span className="tableRow-ResolvedProblems">{team.totalScore}</span>
+        <span className="tableRow-ResolvedProblems">
+          {isScoreInteger ? team.totalScore.toFixed(0) : team.totalScore.toFixed(2)}
+        </span>
         {/*Penalty*/}
         <span className="tableRow-Penalty">{team.totalPenalty}</span>
       </div>

@@ -77,6 +77,8 @@ export const getContestDataWithSarisStandJSON = (rawText: string) => {
       frozenTimeDuration: 300 - oldSarisData.freezeTimeMinutesFromStart,
       name: oldSarisData.contestName,
       type: "ICPC",
+      scoreMode: "absolute",
+      penaltyPerSubmission: 20,
     },
     problems: oldSarisData.problemLetters.map(letter => {
       return { index: letter };
@@ -86,6 +88,7 @@ export const getContestDataWithSarisStandJSON = (rawText: string) => {
     }),
     verdicts: {
       accepted: ["ACCEPTED"],
+      partiallyAccepted: [],
       wrongAnswerWithPenalty: ["WRONG_ANSWER"],
       wrongAnswerWithoutPenalty: [],
     },

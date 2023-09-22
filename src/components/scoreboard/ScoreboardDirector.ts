@@ -64,6 +64,10 @@ function isSubmissionAC(submission: Submission, accepted: string[]) {
   return accepted.includes(submission.verdict);
 }
 
+function isSubmissionPartialAC(submission: Submission, partial: string[]) {
+  return partial.includes(submission.verdict);
+}
+
 function isSubmissionWAwNoPenalty(submission: Submission, verdicts: string[]) {
   return verdicts.includes(submission.verdict);
 }
@@ -72,32 +76,76 @@ function isSubmissionWAwPenalty(submission: Submission, verdicts: string[]) {
   return verdicts.includes(submission.verdict);
 }
 
+function getSubmissionPenalty(
+  submission: Submission,
+  problemTries: number,
+  penaltyPerSubmission: number
+) {
+  return submission.penalty
+    ? submission.penalty + problemTries * penaltyPerSubmission
+    : submission.timeSubmitted + problemTries * penaltyPerSubmission;
+}
+
 function processSubmission(submission: Submission, team: TeamType, scoreboard: ScoreboardType) {
+  let wasProblemSolved = false;
   const problemIndex = getProblemIndexNumber(scoreboard.problems, submission.problemIndex);
   const problem = team.problems[problemIndex];
   // If is WA without penalty, do nothing
   if (isSubmissionWAwNoPenalty(submission, scoreboard.verdicts.wrongAnswerWithoutPenalty)) {
-    return false;
+    // Do nothing
   }
   // If WA with penalty, increase tries
-  if (isSubmissionWAwPenalty(submission, scoreboard.verdicts.wrongAnswerWithPenalty)) {
+  else if (isSubmissionWAwPenalty(submission, scoreboard.verdicts.wrongAnswerWithPenalty)) {
     problem.tries++;
-    return false;
   }
-  if (isSubmissionAC(submission, scoreboard.verdicts.accepted)) {
+  // Partial AC, see if has better score
+  else if (isSubmissionPartialAC(submission, scoreboard.verdicts.partiallyAccepted)) {
+    const submissionScore = submission.problemScore!;
+    const submissionPenalty = getSubmissionPenalty(
+      submission,
+      problem.tries,
+      scoreboard.penaltyPerSubmission
+    );
+    if (submissionScore > problem.score) {
+      problem.score = submissionScore;
+      problem.penalty = submissionPenalty;
+    }
+    problem.tries++;
+  }
+  // If AC, nice
+  else if (isSubmissionAC(submission, scoreboard.verdicts.accepted)) {
+    // If not partial scoring, is either [0, 1] = [WA, AC]
+    const submissionScore = submission.problemScore ?? 1;
+    // If the problem has penalty, is IOI style, the extra penalty for each try is 10 minutes
+    // otherwise if the problem has no penalty included is ICPC style, the extra penalty for each try is 20 minutes
+    const submissionPenalty = getSubmissionPenalty(
+      submission,
+      problem.tries,
+      scoreboard.penaltyPerSubmission
+    );
     if (!problem.isSolved) {
       problem.isSolved = true;
-      problem.score = 1;
-      problem.penalty = submission.timeSubmitted + problem.tries * 20;
-      team.totalPenalty = team.problems.reduce((acc, p) => acc + p.penalty, 0);
-      team.totalScore = team.problems.reduce((acc, p) => acc + p.score, 0);
+      problem.score = submissionScore;
+      problem.penalty = submissionPenalty;
       if (scoreboard.firstSolvedArray[problemIndex] === submission.contestantName) {
         problem.isFirstSolved = true;
         scoreboard.isProblemAlreadySolved[problemIndex] = 1;
       }
-      return true;
+      wasProblemSolved = true;
     }
   }
+
+  if (team.name.includes("CLIC-K-CONALEP")) {
+    // debugger;
+    console.log("CurrSubmission", submission);
+    console.log("Before calc:", team);
+  }
+  team.totalPenalty = team.problems.reduce((acc, p) => acc + p.penalty, 0);
+  team.totalScore = team.problems.reduce((acc, p) => acc + p.score, 0);
+  if (team.name.includes("CLIC-K-CONALEP")) {
+    console.log("after calc:", team);
+  }
+  return wasProblemSolved;
 }
 
 function processSubmissionBeforeFreeze(
@@ -208,6 +256,9 @@ export function getInitialData(contestData: ContestData) {
       sortSubmissionsByTimeAndStatus(contestData.submissions, contestData),
       contestData
     ),
+    // TODO: Receive it from contestMetadata since AFAIK omegaup can have multiple values for this one
+    penaltyPerSubmission: contestData.contestMetadata.penaltyPerSubmission,
+    scoreMode: contestData.contestMetadata.scoreMode,
   } as ScoreboardType;
 
   // Team data comes from here

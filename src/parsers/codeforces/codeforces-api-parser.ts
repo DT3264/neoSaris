@@ -110,6 +110,8 @@ export const getContestData = async ({
       frozenTimeDuration: frozenTime,
       name: response.result.contest.name,
       type: response.result.contest.type,
+      scoreMode: "absolute",
+      penaltyPerSubmission: 20,
     },
     problems: response.result.problems.map(problem => {
       return { index: problem.index, name: problem.name };
@@ -153,6 +155,7 @@ export const getContestDataWithCodeforcesAPI = async ({
     contestants: contestData.contestants,
     verdicts: {
       accepted: ["OK", "PARTIAL"],
+      partiallyAccepted: [],
       wrongAnswerWithPenalty: [
         "FAILED",
         "RUNTIME_ERROR",

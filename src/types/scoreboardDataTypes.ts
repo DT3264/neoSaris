@@ -1,4 +1,4 @@
-import { Problem, Submission, Verdict } from "./contestDataTypes";
+import { Problem, ScoreModeType, Submission, Verdict } from "./contestDataTypes";
 
 export type Team = {
   position: number;
@@ -78,6 +78,8 @@ export type ScoreboardType = {
   contestName: string;
   contestType: string;
   firstSolvedArray: string[];
+  penaltyPerSubmission: number;
+  scoreMode: ScoreModeType;
 };
 
 export type ScoreboardDirectorType = {
